@@ -8,25 +8,18 @@ using System.Threading.Tasks;
 
 namespace FishResident.Models
 {
-    public class Residence
+    public class FeatureAllowedValue
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
         //basic fields here?
         //как мне кажется, как минимум вещественные величины (площадь и всякое такое) нужно вынести сюда
 
-        public String Address { get; set; }
+        public String Value { get; set; }
 
         [Required]
-        public String OwnerId { get; set; }
+        public Guid FeatureId { get; set; }
 
-        public ApplicationUser Owner { get; set; }
-
-        [Required]
-        public Guid TypeId { get; set; }
-
-        public ResidenceType Type { get; set; }
-
-        public ICollection<Agreement> Agreements { get; set; }
+        public Feature Feature { get; set; }
     }
 }

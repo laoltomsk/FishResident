@@ -4,14 +4,16 @@ using FishResident.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FishResident.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190530164850_AddSearchRequests")]
+    partial class AddSearchRequests
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -146,26 +148,6 @@ namespace FishResident.Migrations
                     b.ToTable("FeatureAllowedValues");
                 });
 
-            modelBuilder.Entity("FishResident.Models.FeatureRequest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<Guid>("FeatureId");
-
-                    b.Property<Guid>("SearchRequestId");
-
-                    b.Property<string>("Value");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FeatureId");
-
-                    b.HasIndex("SearchRequestId");
-
-                    b.ToTable("FeatureRequests");
-                });
-
             modelBuilder.Entity("FishResident.Models.FeatureType", b =>
                 {
                     b.Property<Guid>("Id")
@@ -229,7 +211,7 @@ namespace FishResident.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("SearchRequests");
+                    b.ToTable("SearchRequest");
                 });
 
             modelBuilder.Entity("FishResident.Models.Subscription", b =>
@@ -404,19 +386,6 @@ namespace FishResident.Migrations
                     b.HasOne("FishResident.Models.Feature", "Feature")
                         .WithMany("AllowedValues")
                         .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("FishResident.Models.FeatureRequest", b =>
-                {
-                    b.HasOne("FishResident.Models.Feature", "Feature")
-                        .WithMany()
-                        .HasForeignKey("FeatureId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FishResident.Models.SearchRequest", "SearchRequest")
-                        .WithMany("FeatureRequests")
-                        .HasForeignKey("SearchRequestId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

@@ -23,6 +23,8 @@ namespace FishResident.Models
 
         public ICollection<Subscription> Subscriptions { get; set; }
 
-        //public ICollection<Residence> Residences { get; set; }
+        public ICollection<Residence> Residences { get; set; }
+
+        public ICollection<SearchRequest> SearchRequests { get; set; }
     }
 }
