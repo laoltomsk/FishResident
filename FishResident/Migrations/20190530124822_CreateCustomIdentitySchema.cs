@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FishResident.Data.Migrations
+namespace FishResident.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class CreateCustomIdentitySchema : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

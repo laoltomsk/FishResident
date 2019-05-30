@@ -6,8 +6,27 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530123722_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530123722_AddUserFields.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530123936_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530123936_AddUserFields.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530124236_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530124236_AddUserFields.Designer.cs" />
+    <Compile Remove="Migrations\20190530125127_AddUserFields.cs" />
+    <Compile Remove="Migrations\20190530125127_AddUserFields.Designer.cs" />
+    <Compile Remove="Migrations\20190530125250_AddTestClass.cs" />
+    <Compile Remove="Migrations\20190530125250_AddTestClass.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
