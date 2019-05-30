@@ -18,6 +18,34 @@
     <Compile Remove="Migrations\20190530125127_AddUserFields.Designer.cs" />
     <Compile Remove="Migrations\20190530125250_AddTestClass.cs" />
     <Compile Remove="Migrations\20190530125250_AddTestClass.Designer.cs" />
+    <Compile Remove="Migrations\20190530131145_AddSubscriptions.cs" />
+    <Compile Remove="Migrations\20190530131145_AddSubscriptions.Designer.cs" />
+    <Compile Remove="Migrations\20190530131824_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530131824_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132147_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132147_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132622_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132622_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132903_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132903_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530133616_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530133616_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530133945_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530133945_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134342_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530134342_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134409_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530134409_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134945_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530134945_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135135_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135135_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135309_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135309_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135604_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135604_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530140111_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530140111_AddSubscriptionsAndResidences.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,6 +15,10 @@ namespace FishResident.Data
 
         }
 
+        public DbSet<Subscription> Subscriptions { get; set; }
+
+        public DbSet<Residence> Residences { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
