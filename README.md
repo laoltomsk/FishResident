@@ -3,4 +3,4 @@ A hitsCTFteam project about rental business in USA
 
 
 Link to front:
-https://github.com/AnyaOstanina/residenceFront
+https://github.com/AnyaOstanina/flatsFront
