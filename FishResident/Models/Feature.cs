@@ -18,7 +18,7 @@ namespace FishResident.Models
 
         public Feature LinkedFeature { get; set; }
         
-        public Guid LinkedFeatureId { get; set; }
+        public Guid? LinkedFeatureId { get; set; }
 
         public ICollection<FeatureAllowedValue> AllowedValues { get; set; }
 

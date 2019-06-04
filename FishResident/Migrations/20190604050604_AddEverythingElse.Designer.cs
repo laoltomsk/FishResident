@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishResident.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190530145222_AddResidenceTypes")]
-    partial class AddResidenceTypes
+    [Migration("20190604050604_AddEverythingElse")]
+    partial class AddEverythingElse
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -110,6 +110,76 @@ namespace FishResident.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("FishResident.Models.Feature", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("AdditionalInfo");
+
+                    b.Property<Guid?>("FeatureTypeId");
+
+                    b.Property<Guid>("LinkedFeatureId");
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureTypeId");
+
+                    b.HasIndex("LinkedFeatureId");
+
+                    b.ToTable("Features");
+                });
+
+            modelBuilder.Entity("FishResident.Models.FeatureAllowedValue", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("FeatureId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureId");
+
+                    b.ToTable("FeatureAllowedValues");
+                });
+
+            modelBuilder.Entity("FishResident.Models.FeatureRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<Guid>("FeatureId");
+
+                    b.Property<Guid>("SearchRequestId");
+
+                    b.Property<string>("Value");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FeatureId");
+
+                    b.HasIndex("SearchRequestId");
+
+                    b.ToTable("FeatureRequests");
+                });
+
+            modelBuilder.Entity("FishResident.Models.FeatureType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("FeatureTypes");
+                });
+
             modelBuilder.Entity("FishResident.Models.Residence", b =>
                 {
                     b.Property<Guid>("Id")
@@ -120,11 +190,15 @@ namespace FishResident.Migrations
                     b.Property<string>("OwnerId")
                         .IsRequired();
 
+                    b.Property<Guid?>("SearchRequestId");
+
                     b.Property<Guid>("TypeId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("SearchRequestId");
 
                     b.HasIndex("TypeId");
 
@@ -140,7 +214,24 @@ namespace FishResident.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ResidenceType");
+                    b.ToTable("ResidenceTypes");
+                });
+
+            modelBuilder.Entity("FishResident.Models.SearchRequest", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Address");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SearchRequests");
                 });
 
             modelBuilder.Entity("FishResident.Models.Subscription", b =>
@@ -283,7 +374,7 @@ namespace FishResident.Migrations
             modelBuilder.Entity("FishResident.Models.Agreement", b =>
                 {
                     b.HasOne("FishResident.Models.ApplicationUser", "Owner")
-                        .WithMany()
+                        .WithMany("AgreementsOwner")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -293,8 +384,41 @@ namespace FishResident.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FishResident.Models.ApplicationUser", "Resident")
-                        .WithMany()
+                        .WithMany("AgreementsResident")
                         .HasForeignKey("ResidentId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FishResident.Models.Feature", b =>
+                {
+                    b.HasOne("FishResident.Models.FeatureType", "FeatureType")
+                        .WithMany()
+                        .HasForeignKey("FeatureTypeId");
+
+                    b.HasOne("FishResident.Models.Feature", "LinkedFeature")
+                        .WithMany()
+                        .HasForeignKey("LinkedFeatureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FishResident.Models.FeatureAllowedValue", b =>
+                {
+                    b.HasOne("FishResident.Models.Feature", "Feature")
+                        .WithMany("AllowedValues")
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FishResident.Models.FeatureRequest", b =>
+                {
+                    b.HasOne("FishResident.Models.Feature", "Feature")
+                        .WithMany()
+                        .HasForeignKey("FeatureId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FishResident.Models.SearchRequest", "SearchRequest")
+                        .WithMany("FeatureRequests")
+                        .HasForeignKey("SearchRequestId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -305,9 +429,21 @@ namespace FishResident.Migrations
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
+                    b.HasOne("FishResident.Models.SearchRequest")
+                        .WithMany("Results")
+                        .HasForeignKey("SearchRequestId");
+
                     b.HasOne("FishResident.Models.ResidenceType", "Type")
                         .WithMany()
                         .HasForeignKey("TypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("FishResident.Models.SearchRequest", b =>
+                {
+                    b.HasOne("FishResident.Models.ApplicationUser", "User")
+                        .WithMany("SearchRequests")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

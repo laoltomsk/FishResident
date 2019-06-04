@@ -15,7 +15,7 @@ namespace FishResident.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -372,7 +372,7 @@ namespace FishResident.Migrations
             modelBuilder.Entity("FishResident.Models.Agreement", b =>
                 {
                     b.HasOne("FishResident.Models.ApplicationUser", "Owner")
-                        .WithMany()
+                        .WithMany("AgreementsOwner")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -382,7 +382,7 @@ namespace FishResident.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FishResident.Models.ApplicationUser", "Resident")
-                        .WithMany()
+                        .WithMany("AgreementsResident")
                         .HasForeignKey("ResidentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -26,5 +26,11 @@ namespace FishResident.Models
         public ICollection<Residence> Residences { get; set; }
 
         public ICollection<SearchRequest> SearchRequests { get; set; }
+
+        [InverseProperty("Owner")]
+        public ICollection<Agreement> AgreementsOwner { get; set; }
+
+        [InverseProperty("Resident")]
+        public ICollection<Agreement> AgreementsResident { get; set; }
     }
 }
