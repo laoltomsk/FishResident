@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace FishResident.Models
 {
-    public class FeatureAllowedValue
+    public class FeatureValue
     {
         public Guid Id { get; set; }
 
-        public FeatureType FeatureType { get; set; }
+        public Feature Feature { get; set; }
 
-        public Guid FeatureTypeId { get; set; }
+        public Guid FeatureId { get; set; }
 
         public String Value { get; set; }
     }

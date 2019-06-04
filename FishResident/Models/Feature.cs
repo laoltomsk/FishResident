@@ -12,15 +12,9 @@ namespace FishResident.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public String Name { get; set; }
-
-        public String AdditionalInfo { get; set; }
-
         public Feature LinkedFeature { get; set; }
         
         public Guid? LinkedFeatureId { get; set; }
-
-        public ICollection<FeatureAllowedValue> AllowedValues { get; set; }
 
         public FeatureType FeatureType { get; set; }
     }
