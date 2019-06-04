@@ -6,8 +6,69 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.cs" />
+    <Compile Remove="Data\Migrations\00000000000000_CreateIdentitySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530123722_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530123722_AddUserFields.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530123936_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530123936_AddUserFields.Designer.cs" />
+    <Compile Remove="Data\Migrations\20190530124236_AddUserFields.cs" />
+    <Compile Remove="Data\Migrations\20190530124236_AddUserFields.Designer.cs" />
+    <Compile Remove="Migrations\20190530125127_AddUserFields.cs" />
+    <Compile Remove="Migrations\20190530125127_AddUserFields.Designer.cs" />
+    <Compile Remove="Migrations\20190530125250_AddTestClass.cs" />
+    <Compile Remove="Migrations\20190530125250_AddTestClass.Designer.cs" />
+    <Compile Remove="Migrations\20190530131145_AddSubscriptions.cs" />
+    <Compile Remove="Migrations\20190530131145_AddSubscriptions.Designer.cs" />
+    <Compile Remove="Migrations\20190530131824_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530131824_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132147_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132147_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132622_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132622_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530132903_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530132903_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530133616_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530133616_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530133945_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530133945_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134342_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530134342_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134409_AddResidences.cs" />
+    <Compile Remove="Migrations\20190530134409_AddResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530134945_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530134945_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135135_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135135_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135309_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135309_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530135604_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530135604_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530140111_AddSubscriptionsAndResidences.cs" />
+    <Compile Remove="Migrations\20190530140111_AddSubscriptionsAndResidences.Designer.cs" />
+    <Compile Remove="Migrations\20190530143812_AddAgreements.cs" />
+    <Compile Remove="Migrations\20190530143812_AddAgreements.Designer.cs" />
+    <Compile Remove="Migrations\20190530144017_AddAgreements.cs" />
+    <Compile Remove="Migrations\20190530144017_AddAgreements.Designer.cs" />
+    <Compile Remove="Migrations\20190530145222_AddResidenceTypes.cs" />
+    <Compile Remove="Migrations\20190530145222_AddResidenceTypes.Designer.cs" />
+    <Compile Remove="Migrations\20190530155908_AddFeatures.cs" />
+    <Compile Remove="Migrations\20190530155908_AddFeatures.Designer.cs" />
+    <Compile Remove="Migrations\20190530162109_AddFeatures.cs" />
+    <Compile Remove="Migrations\20190530162109_AddFeatures.Designer.cs" />
+    <Compile Remove="Migrations\20190530164850_AddSearchRequests.cs" />
+    <Compile Remove="Migrations\20190530164850_AddSearchRequests.Designer.cs" />
+    <Compile Remove="Migrations\20190530170708_AddFeatureRequests.cs" />
+    <Compile Remove="Migrations\20190530170708_AddFeatureRequests.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>
