@@ -15,6 +15,10 @@ namespace FishResident.Models
         //basic fields here?
         //как мне кажется, как минимум вещественные величины (площадь и всякое такое) нужно вынести сюда
 
+        public Double Area { get; set; }
+
+        public Double Cost { get; set; }
+
         public String Address { get; set; }
 
         [Required]
