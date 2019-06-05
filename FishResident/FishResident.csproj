@@ -60,6 +60,10 @@
     <Compile Remove="Migrations\20190530164850_AddSearchRequests.Designer.cs" />
     <Compile Remove="Migrations\20190530170708_AddFeatureRequests.cs" />
     <Compile Remove="Migrations\20190530170708_AddFeatureRequests.Designer.cs" />
+    <Compile Remove="Migrations\20190605104854_SeedDataPart1.cs" />
+    <Compile Remove="Migrations\20190605104854_SeedDataPart1.Designer.cs" />
+    <Compile Remove="Migrations\20190605110320_SeedDataPart2.cs" />
+    <Compile Remove="Migrations\20190605110320_SeedDataPart2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
