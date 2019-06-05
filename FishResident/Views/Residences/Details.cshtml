@@ -8,6 +8,22 @@
 
 <div>
     <h4>Residence</h4>
+    <p>
+        <a asp-action="Create" asp-controller="ResidencePhotos" asp-route-residenceId="@Model.Id" class="btn btn-default">Create New</a>
+    </p>
+    <div class="row">
+        @foreach (var item in Model.ResidencePhotos)
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@item.Path" alt="Image" />
+                    <div class="caption">
+                        <p><a asp-action="Delete" asp-controller="ResidencePhotos" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
     <hr />
     <dl class="dl-horizontal">
         <dt>

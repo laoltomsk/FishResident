@@ -9,6 +9,7 @@ using FishResident.Data;
 using FishResident.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
+using FishResident.Models.EditModels;
 
 namespace FishResident.Controllers
 {
@@ -31,12 +32,11 @@ namespace FishResident.Controllers
             var residences = await _context.Residences
                 .Include(r => r.Owner)
                 .Include(r => r.Type)
+                .Include(r => r.ResidencePhotos)
                 .Where(r => r.OwnerId == user.Id)
                 .ToListAsync();
 
             return View(residences);
-            //var applicationDbContext = _context.Residences.Include(r => r.Owner).Include(r => r.Type);
-            //return View(await applicationDbContext.ToListAsync());
         }
 
         // GET: Residences/Details/5
@@ -50,6 +50,7 @@ namespace FishResident.Controllers
             var residence = await _context.Residences
                 .Include(r => r.Owner)
                 .Include(r => r.Type)
+                .Include(r => r.ResidencePhotos)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (residence == null)
             {
@@ -62,9 +63,8 @@ namespace FishResident.Controllers
         // GET: Residences/Create
         public IActionResult Create()
         {
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id");
-            ViewData["TypeId"] = new SelectList(_context.ResidenceTypes, "Id", "Id");
-            return View();
+            ViewBag.TypeId = new SelectList(_context.ResidenceTypes, "Id", "Name");
+            return View(new ResidenceEditModel());
         }
 
         // POST: Residences/Create
@@ -72,18 +72,28 @@ namespace FishResident.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Area,Cost,Address,OwnerId,TypeId")] Residence residence)
+        public async Task<IActionResult> Create(ResidenceEditModel model)
         {
-            if (ModelState.IsValid)
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (ModelState.IsValid && user != null)
             {
-                residence.Id = Guid.NewGuid();
-                _context.Add(residence);
+                var residence = new Residence
+                {
+                    TypeId = model.TypeId,
+                    Address = model.Address,
+                    Area = model.Area,
+                    Cost = model.Cost,
+                    OwnerId = user.Id
+                };
+
+                _context.Residences.Add(residence);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", residence.OwnerId);
-            ViewData["TypeId"] = new SelectList(_context.ResidenceTypes, "Id", "Id", residence.TypeId);
-            return View(residence);
+
+            ViewBag.TypeId = new SelectList(_context.ResidenceTypes, "Id", "Name");
+            return View(model);
         }
 
         // GET: Residences/Edit/5
@@ -94,14 +104,22 @@ namespace FishResident.Controllers
                 return NotFound();
             }
 
-            var residence = await _context.Residences.FindAsync(id);
-            if (residence == null)
+            var residence = await _context.Residences.SingleOrDefaultAsync(m => m.Id == id);
+            if (residence == null)  //TODO: add permission validation
             {
                 return NotFound();
             }
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", residence.OwnerId);
-            ViewData["TypeId"] = new SelectList(_context.ResidenceTypes, "Id", "Id", residence.TypeId);
-            return View(residence);
+
+            var model = new ResidenceEditModel
+            {
+                TypeId = residence.TypeId,
+                Address = residence.Address,
+                Area = residence.Area,
+                Cost = residence.Cost
+            };
+
+            ViewBag.TypeId = new SelectList(_context.ResidenceTypes, "Id", "Name");
+            return View(model);
         }
 
         // POST: Residences/Edit/5
@@ -109,36 +127,32 @@ namespace FishResident.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Area,Cost,Address,OwnerId,TypeId")] Residence residence)
+        public async Task<IActionResult> Edit(Guid? id, ResidenceEditModel model)
         {
-            if (id != residence.Id)
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var residence = await _context.Residences.SingleOrDefaultAsync(m => m.Id == id);
+            if (residence == null)  //TODO: add permission validation
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(residence);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ResidenceExists(residence.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
+                residence.TypeId = model.TypeId;
+                residence.Address = model.Address;
+                residence.Cost = model.Cost;
+                residence.Area = model.Area;
+
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["OwnerId"] = new SelectList(_context.Users, "Id", "Id", residence.OwnerId);
-            ViewData["TypeId"] = new SelectList(_context.ResidenceTypes, "Id", "Id", residence.TypeId);
-            return View(residence);
+
+            ViewBag.TypeId = new SelectList(_context.ResidenceTypes, "Id", "Name");
+            return View(model);
         }
 
         // GET: Residences/Delete/5
@@ -164,7 +178,7 @@ namespace FishResident.Controllers
         // POST: Residences/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             var residence = await _context.Residences.FindAsync(id);
             _context.Residences.Remove(residence);

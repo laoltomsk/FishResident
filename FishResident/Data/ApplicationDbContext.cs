@@ -35,6 +35,8 @@ namespace FishResident.Data
 
         public DbSet<FeatureRequest> FeatureRequests { get; set; }
 
+        public DbSet<ResidencePhoto> ResidencePhotos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
