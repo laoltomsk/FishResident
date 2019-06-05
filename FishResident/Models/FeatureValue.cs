@@ -10,7 +10,7 @@ namespace FishResident.Models
 {
     public class FeatureValue
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
 
         public Feature Feature { get; set; }
 
