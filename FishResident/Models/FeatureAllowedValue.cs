@@ -12,14 +12,10 @@ namespace FishResident.Models
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        //basic fields here?
-        //как мне кажется, как минимум вещественные величины (площадь и всякое такое) нужно вынести сюда
+        public FeatureType FeatureType { get; set; }
+
+        public Guid FeatureTypeId { get; set; }
 
         public String Value { get; set; }
-
-        [Required]
-        public Guid FeatureId { get; set; }
-
-        public Feature Feature { get; set; }
     }
 }

@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace FishResident.Models
 {
-    public class FeatureType
+    public class FeatureValue
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public String Name { get; set; }
+        public Feature Feature { get; set; }
 
-        public String AdditionalInfo { get; set; }
+        public Guid FeatureId { get; set; }
 
-        public ICollection<FeatureAllowedValue> AllowedValues { get; set; }
-
-        //TODO: public FeatureTypeComparator Comparator { get; set; }
+        public String Value { get; set; }
     }
 }

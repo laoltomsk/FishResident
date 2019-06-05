@@ -29,6 +29,8 @@ namespace FishResident.Data
 
         public DbSet<FeatureType> FeatureTypes { get; set; }
 
+        public DbSet<FeatureValue> FeatureValues { get; set; }
+
         public DbSet<SearchRequest> SearchRequests { get; set; }
 
         public DbSet<FeatureRequest> FeatureRequests { get; set; }
