@@ -23,9 +23,9 @@ namespace FishResident.Controllers
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ApplicationDbContext _context;
-        private readonly IHostingEnvironment hostingEnvironment;
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public ResidencePhotosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHostingEnvironment _hostingEnvironment)
+        public ResidencePhotosController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _userManager = userManager;
@@ -71,7 +71,7 @@ namespace FishResident.Controllers
             }
 
             var fileName = Path.GetFileName(ContentDispositionHeaderValue.Parse(model.File.ContentDisposition).FileName.Value.Trim('"'));
-            var fileExt = Path.GetExtension(fileName);
+            var fileExt = Path.GetExtension(fileName).ToLower();
             if (!AllowedExtensions.Contains(fileExt))
             {
                 ModelState.AddModelError(nameof(model.File), "This file type is prohibited");
@@ -84,8 +84,9 @@ namespace FishResident.Controllers
                     ResidenceId = residence.Id
                 };
 
-                var attachmentPath = Path.Combine(hostingEnvironment.WebRootPath, "attachments", residencePhoto.Id.ToString("N") + fileExt);
+                var attachmentPath = Path.Combine(_hostingEnvironment.WebRootPath, "attachments", residencePhoto.Id.ToString("N") + fileExt);
                 residencePhoto.Path = $"/attachments/{residencePhoto.Id:N}{fileExt}";
+                residencePhoto.FileName = $"{residencePhoto.Id:N}{fileExt}";
                 using (var fileStream = new FileStream(attachmentPath, FileMode.CreateNew, FileAccess.ReadWrite, FileShare.Read))
                 {
                     await model.File.CopyToAsync(fileStream);
@@ -93,7 +94,7 @@ namespace FishResident.Controllers
 
                 _context.Add(residencePhoto);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "Residence", new { id = residence.Id });
+                return RedirectToAction("Details", "Residences", new { id = residence.Id });
             }
 
             ViewBag.Residence = residence;
@@ -137,7 +138,7 @@ namespace FishResident.Controllers
                 return NotFound();
             }
 
-            var attachmentPath = Path.Combine(hostingEnvironment.WebRootPath, "attachments", residencePhoto.Id.ToString("N") + Path.GetExtension(residencePhoto.Path));
+            var attachmentPath = Path.Combine(_hostingEnvironment.WebRootPath, "attachments", residencePhoto.Id.ToString("N") + Path.GetExtension(residencePhoto.Path));
             System.IO.File.Delete(attachmentPath);
             _context.ResidencePhotos.Remove(residencePhoto);
             await _context.SaveChangesAsync();
