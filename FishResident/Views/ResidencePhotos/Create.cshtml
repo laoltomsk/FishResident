@@ -1,0 +1,36 @@
+﻿@model FishResident.Models.EditModels.ResidencePhotoEditModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>ResidencePhoto</h4>
+<hr />
+<form asp-action="Create" asp-route-residenceId="@ViewBag.Residence.Id" enctype="multipart/form-data">
+    <div class="form-horizontal">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="File" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input type="file" asp-for="File" class="form-control" />
+                <span asp-validation-for="File" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+<div>
+    <a asp-action="Details" asp-controller="Residence" asp-route-id="@ViewBag.Residence.Id">Back to residence</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
