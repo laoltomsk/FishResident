@@ -5,11 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FishResident.Models;
+using FishResident.Services;
 
 namespace FishResident.Controllers
 {
     public class HomeController : Controller
     {
+
+        private readonly IMailSenderService mailSenderService;
+
+        public HomeController(IMailSenderService mailSenderService)
+        {
+            this.mailSenderService = new MailSenderService();
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -25,7 +34,7 @@ namespace FishResident.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            mailSenderService.MailSend("kentok2012@gmail.com","TEEEEEST", "Try sending message to mail", null);
             return View();
         }
 
