@@ -20,8 +20,8 @@ namespace FishResident.Models
         public SearchRequest SearchRequest { get; set; }
 
         [Required]
-        public Guid FeatureId { get; set; }
+        public Guid FeatureTypeId { get; set; }
 
-        public Feature Feature { get; set; }
+        public FeatureType FeatureType { get; set; }
     }
 }

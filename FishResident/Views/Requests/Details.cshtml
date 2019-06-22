@@ -1,0 +1,57 @@
+﻿@using FishResident.Services
+@model FishResident.Models.SearchRequest
+@inject IPermissionService UserPermissions
+
+@{
+    ViewData["Title"] = "Details";
+    var canEdit = UserPermissions.IsOwnerOfRequest(Model);
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Search Request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Email)
+        </dd>
+        @foreach (var feature in Model.FeatureRequests.OrderBy(r => r.FeatureType.Name).ToList())
+        {
+            <dt>
+                @feature.FeatureType.Name
+            </dt>
+            <dd>
+                @feature.Value
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (canEdit)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <text>|</text>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

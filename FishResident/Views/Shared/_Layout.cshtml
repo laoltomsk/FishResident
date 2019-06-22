@@ -36,6 +36,7 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a asp-area="" asp-controller="Residences" asp-action="Index">My residences</a></li>
+                        <li><a asp-area="" asp-controller="Requests" asp-action="Index">My requests</a></li>
                         <li><a asp-area="" asp-controller="ResidenceTypes" asp-action="Index">Residence types</a></li>
                     }
                 </ul>

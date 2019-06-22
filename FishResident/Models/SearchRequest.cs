@@ -14,6 +14,10 @@ namespace FishResident.Models
 
         public String Address { get; set; }
 
+        public Double Area { get; set; }
+
+        public Double Cost { get; set; }
+
         [Required]
         public String UserId { get; set; }
 

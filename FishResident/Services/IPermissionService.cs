@@ -9,5 +9,7 @@ namespace FishResident.Services
     public interface IPermissionService
     {
         bool IsOwnerOfResidence(Residence residence);
+
+        bool IsOwnerOfRequest(SearchRequest request);
     }
 }

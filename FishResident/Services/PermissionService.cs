@@ -30,5 +30,15 @@ namespace FishResident.Services
 
             return _userManager.GetUserId(_httpContextAccessor.HttpContext.User) == residence.OwnerId;
         }
+
+        public bool IsOwnerOfRequest(SearchRequest request)
+        {
+            if (!HttpContext.User.Identity.IsAuthenticated)
+            {
+                return false;
+            }
+
+            return _userManager.GetUserId(_httpContextAccessor.HttpContext.User) == request.UserId;
+        }
     }
 }
