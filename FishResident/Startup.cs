@@ -13,6 +13,7 @@ using FishResident.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using FishResident.Models;
+using FishResident.Services;
 
 namespace FishResident
 {
@@ -43,6 +44,8 @@ namespace FishResident
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddScoped<FeatureService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

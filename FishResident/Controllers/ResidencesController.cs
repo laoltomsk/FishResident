@@ -51,6 +51,8 @@ namespace FishResident.Controllers
                 .Include(r => r.Owner)
                 .Include(r => r.Type)
                 .Include(r => r.ResidencePhotos)
+                .Include(r => r.Features)
+                .ThenInclude(f => f.FeatureType)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (residence == null)
             {
@@ -88,6 +90,18 @@ namespace FishResident.Controllers
                 };
 
                 _context.Residences.Add(residence);
+
+                foreach (KeyValuePair<Guid, String> kvp in model.Features)
+                {
+                    var feature = new Feature
+                    {
+                        ResidenceId = residence.Id,
+                        FeatureTypeId = kvp.Key,
+                        Value = kvp.Value
+                    };
+
+                    _context.Features.Add(feature);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -104,7 +118,10 @@ namespace FishResident.Controllers
                 return NotFound();
             }
 
-            var residence = await _context.Residences.SingleOrDefaultAsync(m => m.Id == id);
+            var residence = await _context.Residences
+                .Include(r => r.Features)
+                .ThenInclude(f => f.FeatureType)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (residence == null)  //TODO: add permission validation
             {
                 return NotFound();
@@ -115,8 +132,15 @@ namespace FishResident.Controllers
                 TypeId = residence.TypeId,
                 Address = residence.Address,
                 Area = residence.Area,
-                Cost = residence.Cost
+                Cost = residence.Cost,
+                Features = new Dictionary<Guid, string>()
             };
+
+            foreach (var feature in residence.Features)
+            {
+                model.Features[feature.FeatureType.Id] = feature.Value;
+            }
+
 
             ViewBag.TypeId = new SelectList(_context.ResidenceTypes, "Id", "Name");
             return View(model);
@@ -146,6 +170,14 @@ namespace FishResident.Controllers
                 residence.Address = model.Address;
                 residence.Cost = model.Cost;
                 residence.Area = model.Area;
+
+                foreach (KeyValuePair<Guid, String> kvp in model.Features)
+                {
+                    var feature = await _context.Features
+                        .SingleOrDefaultAsync(m => m.ResidenceId == id && m.FeatureTypeId == kvp.Key);
+
+                    feature.Value = kvp.Value;
+                }
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

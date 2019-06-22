@@ -14,5 +14,7 @@ namespace FishResident.Models.EditModels
         public String Address { get; set; }
 
         public Guid TypeId { get; set; }
+
+        public Dictionary<Guid, String> Features { get; set; }
     }
 }

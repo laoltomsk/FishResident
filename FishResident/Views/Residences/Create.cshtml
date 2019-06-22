@@ -1,7 +1,9 @@
 ﻿@model FishResident.Models.EditModels.ResidenceEditModel
-
+@using FishResident.Services
+@inject FeatureService featureService
 @{
     ViewData["Title"] = "Create";
+    var featureTypes = featureService.GetFeatureTypes();
 }
 
 <h2>Create</h2>
@@ -28,9 +30,18 @@
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">Residence Type</label>
                 <select asp-for="TypeId" class="form-control" asp-items="@ViewBag.TypeId"></select>
                 <span asp-validation-for="TypeId" class="text-danger"></span>
             </div>
+            @foreach (var featureType in featureTypes)
+            {
+                <div class="form-group">
+                    <label class="control-label">@featureType.Name</label>
+                    <select asp-for="Features[featureType.Id]" class="form-control" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))"></select>
+                    <span asp-validation-for="Features[featureType.Id]" class="text-danger"></span>
+                </div>
+            }
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>

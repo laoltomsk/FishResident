@@ -34,5 +34,7 @@ namespace FishResident.Models
         public ICollection<Agreement> Agreements { get; set; }
 
         public ICollection<ResidencePhoto> ResidencePhotos { get; set; }
+
+        public ICollection<Feature> Features { get; set; }
     }
 }

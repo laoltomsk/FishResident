@@ -48,14 +48,23 @@
             @Html.DisplayNameFor(model => model.Owner)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Owner.Id)
+            @Html.DisplayFor(model => model.Owner.Email)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Type)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Type.Id)
+            @Html.DisplayFor(model => model.Type.Name)
         </dd>
+        @foreach (var feature in Model.Features.OrderBy(r => r.FeatureType.Name).ToList())
+        {
+            <dt>
+                @feature.FeatureType.Name
+            </dt>
+            <dd>
+                @feature.Value
+            </dd>
+        }
     </dl>
 </div>
 <div>
