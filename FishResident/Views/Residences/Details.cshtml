@@ -1,25 +1,34 @@
-﻿@model FishResident.Models.Residence
+﻿@using FishResident.Services
+@model FishResident.Models.Residence
+@inject IPermissionService UserPermissions
 
 @{
     ViewData["Title"] = "Details";
+    var canEdit = UserPermissions.IsOwnerOfResidence(Model);
 }
 
 <h2>Details</h2>
 
 <div>
     <h4>Residence</h4>
-    <p>
-        <a asp-action="Create" asp-controller="ResidencePhotos" asp-route-residenceId="@Model.Id" class="btn btn-default">Create New</a>
-    </p>
+    @if (canEdit)
+    {
+        <p>
+            <a asp-action="Create" asp-controller="ResidencePhotos" asp-route-residenceId="@Model.Id" class="btn btn-default">Create New</a>
+        </p>
+    }
     <div class="row">
         @foreach (var item in Model.ResidencePhotos)
         {
             <div class="col-sm-6 col-md-4">
                 <div class="thumbnail">
                     <img src="@item.Path" alt="Image" />
-                    <div class="caption">
-                        <p><a asp-action="Delete" asp-controller="ResidencePhotos" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></p>
-                    </div>
+                    @if (canEdit)
+                    {
+                        <div class="caption">
+                            <p><a asp-action="Delete" asp-controller="ResidencePhotos" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></p>
+                        </div>
+                    }
                 </div>
             </div>
         }
@@ -68,6 +77,9 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    @if (canEdit)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <text>|</text>
+    }
     <a asp-action="Index">Back to List</a>
 </div>

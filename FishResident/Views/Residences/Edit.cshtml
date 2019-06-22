@@ -1,6 +1,7 @@
 ﻿@model FishResident.Models.EditModels.ResidenceEditModel
 @using FishResident.Services
 @inject FeatureService featureService
+
 @{
     ViewData["Title"] = "Create";
     var featureTypes = featureService.GetFeatureTypes();

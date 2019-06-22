@@ -10,6 +10,7 @@ using FishResident.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 using FishResident.Models.EditModels;
+using FishResident.Services;
 
 namespace FishResident.Controllers
 {
@@ -18,11 +19,13 @@ namespace FishResident.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IPermissionService _userPermissions;
 
-        public ResidencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public ResidencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IPermissionService userPermissions)
         {
             _context = context;
             _userManager = userManager;
+            _userPermissions = userPermissions;
         }
 
         // GET: Residences
@@ -122,7 +125,7 @@ namespace FishResident.Controllers
                 .Include(r => r.Features)
                 .ThenInclude(f => f.FeatureType)
                 .SingleOrDefaultAsync(m => m.Id == id);
-            if (residence == null)  //TODO: add permission validation
+            if (residence == null || !_userPermissions.IsOwnerOfResidence(residence))
             {
                 return NotFound();
             }
@@ -159,7 +162,7 @@ namespace FishResident.Controllers
             }
 
             var residence = await _context.Residences.SingleOrDefaultAsync(m => m.Id == id);
-            if (residence == null)  //TODO: add permission validation
+            if (residence == null || !_userPermissions.IsOwnerOfResidence(residence))
             {
                 return NotFound();
             }
@@ -199,7 +202,7 @@ namespace FishResident.Controllers
                 .Include(r => r.Owner)
                 .Include(r => r.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (residence == null)
+            if (residence == null || !_userPermissions.IsOwnerOfResidence(residence))
             {
                 return NotFound();
             }
@@ -213,6 +216,12 @@ namespace FishResident.Controllers
         public async Task<IActionResult> DeleteConfirmed(Guid? id)
         {
             var residence = await _context.Residences.FindAsync(id);
+
+            if (residence == null || !_userPermissions.IsOwnerOfResidence(residence))
+            {
+                return NotFound();
+            }
+
             _context.Residences.Remove(residence);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
