@@ -23,7 +23,7 @@ namespace FishResident.Models
 
         public ApplicationUser User { get; set; }
 
-        public ICollection<Residence> Results { get; set; }
+        public ICollection<RequestResult> Results { get; set; }
 
         public ICollection<FeatureRequest> FeatureRequests { get; set; }
     }

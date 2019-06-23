@@ -53,12 +53,16 @@ namespace FishResident.Controllers
                 .Include(r => r.FeatureRequests)
                 .ThenInclude(f => f.FeatureType)
                 .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.Type)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null)
             {
                 return NotFound();
             }
+
+            request.Results = request.Results.OrderByDescending(r => r.Relevance).ToList();
 
             return View(request);
         }
@@ -101,7 +105,48 @@ namespace FishResident.Controllers
 
                     _context.FeatureRequests.Add(feature);
                 }
+
+                var residences = await _context.Residences
+                    .Where (r => r.Cost < 1.25 * model.Cost && r.Area > 0.75 * model.Area)
+                    .Include(r => r.Features)
+                    .ThenInclude(f => f.FeatureType)
+                    .ToListAsync();
+
+                foreach (var residence in residences)
+                {
+                    double criterias = 0, goodCriterias = 0;
+
+                    goodCriterias += Math.Min(model.Area / residence.Area, residence.Area / model.Area);
+                    criterias++;
+
+                    goodCriterias += Math.Min(model.Cost / residence.Cost, residence.Cost / model.Cost);
+                    criterias++;
+
+                    foreach (var criteria in model.Features)
+                    {
+                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
+                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                        {
+                            goodCriterias++;
+                        }
+                        criterias++;
+                    }
+
+                    if (goodCriterias / criterias > 0.75)
+                    {
+                        var requestResult = new RequestResult
+                        {
+                            Relevance = goodCriterias / criterias,
+                            SearchRequestId = request.Id,
+                            ResidenceId = residence.Id
+                        };
+
+                        _context.RequestResults.Add(requestResult);
+                    }
+                }
+
                 await _context.SaveChangesAsync();
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -156,7 +201,9 @@ namespace FishResident.Controllers
                 return NotFound();
             }
 
-            var request = await _context.SearchRequests.SingleOrDefaultAsync(m => m.Id == id);
+            var request = await _context.SearchRequests
+                .Include(r => r.Results)
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (request == null || !_userPermissions.IsOwnerOfRequest(request))
             {
                 return NotFound();
@@ -174,6 +221,47 @@ namespace FishResident.Controllers
                         .SingleOrDefaultAsync(m => m.SearchRequestId == id && m.FeatureTypeId == kvp.Key);
 
                     feature.Value = kvp.Value;
+                }
+
+                request.Results.Clear();
+
+                var residences = await _context.Residences
+                    .Where(r => r.Cost < 1.25 * model.Cost && r.Area > 0.75 * model.Area)
+                    .Include(r => r.Features)
+                    .ThenInclude(f => f.FeatureType)
+                    .ToListAsync();
+
+                foreach (var residence in residences)
+                {
+                    double criterias = 0, goodCriterias = 0;
+
+                    goodCriterias += Math.Min(model.Area / residence.Area, residence.Area / model.Area);
+                    criterias++;
+
+                    goodCriterias += Math.Min(model.Cost / residence.Cost, residence.Cost / model.Cost);
+                    criterias++;
+
+                    foreach (var criteria in model.Features)
+                    {
+                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
+                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                        {
+                            goodCriterias++;
+                        }
+                        criterias++;
+                    }
+
+                    if (goodCriterias / criterias > 0.75)
+                    {
+                        var requestResult = new RequestResult
+                        {
+                            Relevance = goodCriterias / criterias,
+                            SearchRequestId = request.Id,
+                            ResidenceId = residence.Id
+                        };
+
+                        _context.RequestResults.Add(requestResult);
+                    }
                 }
 
                 await _context.SaveChangesAsync();

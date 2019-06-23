@@ -48,6 +48,56 @@
         }
     </dl>
 </div>
+<hr />
+<h4>Search Results</h4>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Results.First().Residence.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Results.First().Residence.Cost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Results.First().Residence.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Results.First().Residence.Owner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Results.First().Residence.Type)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Results)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Residence.Area)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Residence.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Residence.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Residence.Owner.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Residence.Type.Name)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-controller="Residences" asp-route-id="@item.Residence.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 <div>
     @if (canEdit)
     {

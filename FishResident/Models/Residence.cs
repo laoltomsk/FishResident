@@ -36,5 +36,7 @@ namespace FishResident.Models
         public ICollection<ResidencePhoto> ResidencePhotos { get; set; }
 
         public ICollection<Feature> Features { get; set; }
+
+        public ICollection<RequestResult> Requests { get; set; }
     }
 }
