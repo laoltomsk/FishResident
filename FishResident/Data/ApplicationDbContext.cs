@@ -15,6 +15,9 @@ namespace FishResident.Data
 
         }
 
+        public DbSet<TempResidence> TempResidences { get; set; }
+
+
         public DbSet<Subscription> Subscriptions { get; set; }
 
         public DbSet<Residence> Residences { get; set; }
