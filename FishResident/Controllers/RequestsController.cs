@@ -153,6 +153,94 @@ namespace FishResident.Controllers
             return View(model);
         }
 
+        // GET: Residences/Create
+        [AllowAnonymous]
+        public IActionResult CreateAnonymous()
+        {
+            var model = new RequestEditModel();
+            model.Results = new List<RequestResult>();
+
+            return View(model);
+        }
+
+        // POST: Residences/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateAnonymous(RequestEditModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var request = new SearchRequest
+                {
+                    Address = model.Address,
+                    Area = model.Area,
+                    Cost = model.Cost
+                };
+
+                _context.SearchRequests.Add(request);
+
+                foreach (KeyValuePair<Guid, String> kvp in model.Features)
+                {
+                    var feature = new FeatureRequest
+                    {
+                        SearchRequestId = request.Id,
+                        FeatureTypeId = kvp.Key,
+                        Value = kvp.Value
+                    };
+
+                    _context.FeatureRequests.Add(feature);
+                }
+
+                var residences = await _context.Residences
+                    .Where(r => r.Cost < 1.25 * model.Cost && r.Area > 0.75 * model.Area)
+                    .Include(r => r.Features)
+                    .ThenInclude(f => f.FeatureType)
+                    .ToListAsync();
+
+                foreach (var residence in residences)
+                {
+                    double criterias = 0, goodCriterias = 0;
+
+                    goodCriterias += Math.Min(model.Area / residence.Area, residence.Area / model.Area);
+                    criterias++;
+
+                    goodCriterias += Math.Min(model.Cost / residence.Cost, residence.Cost / model.Cost);
+                    criterias++;
+
+                    foreach (var criteria in model.Features)
+                    {
+                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
+                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                        {
+                            goodCriterias++;
+                        }
+                        criterias++;
+                    }
+
+                    if (goodCriterias / criterias > 0.75)
+                    {
+                        var requestResult = new RequestResult
+                        {
+                            Relevance = goodCriterias / criterias,
+                            SearchRequestId = request.Id,
+                            ResidenceId = residence.Id
+                        };
+
+                        _context.RequestResults.Add(requestResult);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(model);
+        }
+
         // GET: Residences/Edit/5
         public async Task<IActionResult> Edit(Guid? id)
         {
@@ -269,6 +357,33 @@ namespace FishResident.Controllers
             }
 
             return View(model);
+        }
+
+        // POST: Residences/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeAnonimize(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var request = await _context.SearchRequests
+                .SingleOrDefaultAsync(m => m.Id == id);
+
+            if (request == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            request.UserId = user.Id;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Residences/Delete/5
