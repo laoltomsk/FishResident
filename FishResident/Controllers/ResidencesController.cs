@@ -105,6 +105,12 @@ namespace FishResident.Controllers
 
                     _context.Features.Add(feature);
                 }
+
+                _context.TempResidences.Add(new TempResidence
+                {
+                    Id = residence.Id
+                });
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -181,6 +187,11 @@ namespace FishResident.Controllers
 
                     feature.Value = kvp.Value;
                 }
+
+                _context.TempResidences.Add(new TempResidence
+                {
+                    Id = residence.Id
+                });
 
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

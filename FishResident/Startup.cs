@@ -44,7 +44,7 @@ namespace FishResident
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
+            
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<FeatureService>();
             services.AddHostedService<TimedUpdateRequestsService>();
