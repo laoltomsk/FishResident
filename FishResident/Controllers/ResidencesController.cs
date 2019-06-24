@@ -43,6 +43,7 @@ namespace FishResident.Controllers
         }
 
         // GET: Residences/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
