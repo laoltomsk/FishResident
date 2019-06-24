@@ -7,79 +7,62 @@
     var canEdit = UserPermissions.IsOwnerOfResidence(Model);
 }
 
-<h2>Details</h2>
+<div class="container-fluid _flat">
+    <div class="container _flat">
+        <h1 class="flat__name">@Model.Address</h1>
+        <div class="flat__info">
+            <div class="flat__photos">
+                @foreach (ResidencePhoto photo in Model.ResidencePhotos)
+                {
+                <div class="flat__photo">
+                    <img alt="" src="@photo.Path" />
+                </div>
+                }
+            </div>
+            <div class="flat__description">
+                <h2>Specifications</h2>
 
-<div>
-    <h4>Residence</h4>
-    @if (canEdit)
-    {
-        <p>
-            <a asp-action="Create" asp-controller="ResidencePhotos" asp-route-residenceId="@Model.Id" class="btn btn-default">Create New</a>
-        </p>
-    }
-    <div class="row">
-        @foreach (var item in Model.ResidencePhotos)
-        {
-            <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                    <img src="@item.Path" alt="Image" />
+                <ul class="results__info">
+                    <li class="results__info-price"> Price: @Model.Cost</li>
+                    <li class="results__info-price"> Area: @Model.Area</li>
+                    @foreach (var feature in Model.Features)
+                    {
+                        <li class="results__info-price">@feature.FeatureType.Name: @feature.Value</li>
+                    }
+
                     @if (canEdit)
                     {
-                        <div class="caption">
-                            <p><a asp-action="Delete" asp-controller="ResidencePhotos" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></p>
-                        </div>
+                    <li class="results__info-price">
+                        <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                        <button class="compare">Remove listing</button>
+                    </li>
                     }
-                </div>
+                </ul>
             </div>
-        }
+            <!--<form method="get" action="/ajax/registration.php" class="flat__form js-validate" id="js-form-validate">
+                <h2>Request information</h2>
+                <div class="fields">
+                    <div class="field js-field">
+                        <label for="">Full Name</label>
+                        <input name="name" type="text" required>
+                    </div>
+                    <div class="field js-field">
+                        <label for="">E-mail</label>
+                        <input name="email" type="email" required>
+                    </div>
+
+                    <div class="field js-field">
+                        <label for="">Phone number</label>
+                        <input name="tel" type="text" required>
+                    </div>
+
+                    <div class="field js-field">
+                        <label for="">More info</label>
+                        <textarea name="info" required> </textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn _default _registration">Get apartment</button>
+            </form>-->
+        </div>
     </div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Owner.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type.Name)
-        </dd>
-        @foreach (var feature in Model.Features.OrderBy(r => r.FeatureType.Name).ToList())
-        {
-            <dt>
-                @feature.FeatureType.Name
-            </dt>
-            <dd>
-                @feature.Value
-            </dd>
-        }
-    </dl>
-</div>
-<div>
-    @if (canEdit)
-    {
-        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <text>|</text>
-    }
-    <a asp-action="Index">Back to List</a>
 </div>
