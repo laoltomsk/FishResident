@@ -142,7 +142,7 @@ namespace FishResident.Controllers
             System.IO.File.Delete(attachmentPath);
             _context.ResidencePhotos.Remove(residencePhoto);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Details", "Residence", new { id = residencePhoto.ResidenceId });
+            return RedirectToAction("Details", "Residences", new { id = residencePhoto.ResidenceId });
         }
 
         private bool ResidencePhotoExists(Guid id)

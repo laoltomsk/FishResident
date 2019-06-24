@@ -35,37 +35,11 @@ namespace FishResident.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var residences = await _context.SearchRequests
                 .Include(r => r.User)
+                .Include(r => r.Results)
                 .Where(r => r.UserId == user.Id)
                 .ToListAsync();
 
             return View(residences);
-        }
-
-        // GET: Requests/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var request = await _context.SearchRequests
-                .Include(r => r.User)
-                .Include(r => r.FeatureRequests)
-                .ThenInclude(f => f.FeatureType)
-                .Include(r => r.Results)
-                .ThenInclude(r => r.Residence)
-                .ThenInclude(r => r.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (request == null)
-            {
-                return NotFound();
-            }
-
-            request.Results = request.Results.OrderByDescending(r => r.Relevance).ToList();
-
-            return View(request);
         }
 
         // GET: Residences/Create
@@ -188,6 +162,12 @@ namespace FishResident.Controllers
                 }
 
                 await _context.SaveChangesAsync();
+
+                if (user != null)
+                {
+                    return Redirect("/Requests/Edit/" + request.Id.ToString());
+                }
+
             }
 
             return View(model);
@@ -206,6 +186,11 @@ namespace FishResident.Controllers
                 .Include(r => r.FeatureRequests)
                 .ThenInclude(f => f.FeatureType)
                 .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.Type)
+                .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.ResidencePhotos)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null || !_userPermissions.IsOwnerOfRequest(request))
@@ -218,7 +203,8 @@ namespace FishResident.Controllers
                 Address = request.Address,
                 Area = request.Area,
                 Cost = request.Cost,
-                Features = new Dictionary<Guid, string>()
+                Features = new Dictionary<Guid, string>(),
+                Results = request.Results
             };
 
             foreach (var feature in request.FeatureRequests)
@@ -351,6 +337,11 @@ namespace FishResident.Controllers
                 .Include(r => r.FeatureRequests)
                 .ThenInclude(f => f.FeatureType)
                 .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.Type)
+                .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.ResidencePhotos)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null || !_userPermissions.IsOwnerOfRequest(request))
@@ -372,6 +363,9 @@ namespace FishResident.Controllers
             {
                 return NotFound();
             }
+
+            _context.RequestResults.RemoveRange(_context.RequestResults.Where(r => r.SearchRequestId == id));
+            await _context.SaveChangesAsync();
 
             _context.SearchRequests.Remove(request);
             await _context.SaveChangesAsync();

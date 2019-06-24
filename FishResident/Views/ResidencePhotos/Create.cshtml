@@ -4,32 +4,29 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-<h4>ResidencePhoto</h4>
-<hr />
-<form asp-action="Create" asp-route-residenceId="@ViewBag.Residence.Id" enctype="multipart/form-data">
-    <div class="form-horizontal">
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="File" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input type="file" asp-for="File" class="form-control" />
-                <span asp-validation-for="File" class="text-danger"></span>
+<div class="container-fluid _search-results">
+    <div class="container _search-results">
+        <div class="results" style="width: 100%">
+            <div class="results__wrap">
+                <h1>Now you create</h1>
             </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="results__filters">
+                <div class="filters">
+                    <div class="filters__type-flat">
+                        <form asp-action="Create" asp-route-residenceId="@ViewBag.Residence.Id" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <span>File</span>
+                            <div class="field js-field">
+                                <input type="file" asp-for="File" />
+                            </div>
+                            <button type="submit" class="btn _default _filters">Add photo</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</form>
-<div>
-    <a asp-action="Details" asp-controller="Residence" asp-route-id="@ViewBag.Residence.Id">Back to residence</a>
 </div>
-
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

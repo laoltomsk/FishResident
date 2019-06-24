@@ -3,7 +3,7 @@
 @inject FeatureService featureService
 @inject IPermissionService permissionService
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Search";
     var featureTypes = featureService.GetFeatureTypes();
 }
 
@@ -11,7 +11,7 @@
     <div class="container _search-results">
         <div class="results" style="width: 100%">
             <div class="results__wrap">
-                <h1> Now you choose</h1>
+                <h1>Now you choose</h1>
                 <span class="results__count">@Model.Results.Count() result(s)</span>
             </div>
             <div class="results__filters">
@@ -34,12 +34,10 @@
                                 </div>
                                 @foreach (var featureType in featureTypes)
                                 {
-
                                     <span>@featureType.Name</span>
                                     <select asp-for="Features[featureType.Id]" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
                                         <option value="Not Specified">Not Specified</option>
                                     </select>
-
                                 }
                             </div>
                             <button type="submit" class="btn _default _filters">Update search</button>
@@ -56,7 +54,10 @@
                                 {
                                     <img alt="" src="@result.Residence.ResidencePhotos.First().Path" />
                                 }
-                                <img alt="" src="/i/item-2.jpg" />
+                                else
+                                {
+                                    <img alt="" src="/i/item-2.jpg" />
+                                }
                             </div>
                             <div class="results__description">
                                 <span class="results__description-name">@result.Residence.Address</span>
@@ -68,7 +69,7 @@
                                 {
                                 <li class="results__info-price">
                                     <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
-                                    <button class="compare" onclick="window.location.replace('/Residences/Delete?id=@result.ResidenceId'); event.preventDefault()">Remove listing</button>
+                                    <button class="compare" onclick="window.location.assign('/Residences/Delete?id=@result.ResidenceId'); event.preventDefault()">Remove listing</button>
                                 </li>
                                 }
                             </ul>
@@ -79,10 +80,6 @@
         </div>
     </div>
 </div>
-
-<script>
-
-</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

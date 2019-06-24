@@ -1,54 +1,84 @@
 ﻿@model FishResident.Models.EditModels.RequestEditModel
 @using FishResident.Services
 @inject FeatureService featureService
-
+@inject IPermissionService permissionService
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Search";
     var featureTypes = featureService.GetFeatureTypes();
 }
 
-<h2>Edit</h2>
-
-<h4>Residence</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Area" class="control-label"></label>
-                <input asp-for="Area" class="form-control" />
-                <span asp-validation-for="Area" class="text-danger"></span>
+<div class="container-fluid _search-results">
+    <div class="container _search-results">
+        <div class="results" style="width: 100%">
+            <div class="results__wrap">
+                <h1>Now you choose</h1>
+                <span class="results__count">@Model.Results.Count() result(s)</span>
             </div>
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
-                <span asp-validation-for="Address" class="text-danger"></span>
-            </div>
-            @foreach (var featureType in featureTypes)
-            {
-                <div class="form-group">
-                    <label class="control-label">@featureType.Name</label>
-                    <select asp-for="Features[featureType.Id]" class="form-control" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
-                        <option value="Not Specified">Not Specified</option>
-                    </select>
-                    <span asp-validation-for="Features[featureType.Id]" class="text-danger"></span>
+            <div class="results__filters">
+                <div class="filters">
+                    <div class="filters__type-flat">
+                        <p> Select by parameters</p>
+                        <form asp-action="Edit" class="filters__form">
+                            <div class="fields">
+                                <div class="field js-field">
+                                    <label asp-for="Area"></label>
+                                    <input asp-for="Area" />
+                                </div>
+                                <div class="field js-field">
+                                    <label asp-for="Cost"></label>
+                                    <input asp-for="Cost" />
+                                </div>
+                                <div class="field js-field">
+                                    <label asp-for="Address"></label>
+                                    <input asp-for="Address" />
+                                </div>
+                                @foreach (var featureType in featureTypes)
+                                {
+                                    <span>@featureType.Name</span>
+                                    <select asp-for="Features[featureType.Id]" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
+                                        <option value="Not Specified">Not Specified</option>
+                                    </select>
+                                }
+                            </div>
+                            <button type="submit" class="btn _default _filters">Update search</button>
+                        </form>
+                    </div>
                 </div>
-            }
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <div class="results__items">
+                    @foreach (var result in Model.Results.OrderByDescending(r => r.Relevance).ToList())
+                    {
+                        var canEdit = permissionService.IsOwnerOfResidence(result.Residence);
+                        <a class="results__item" href="/Residences/Details?id=@result.Residence.Id">
+                            <div class="results__title">
+                                @if (result.Residence.ResidencePhotos.Count() > 0)
+                                {
+                                    <img alt="" src="@result.Residence.ResidencePhotos.First().Path" />
+                                }
+                                else
+                                {
+                                    <img alt="" src="/i/item-2.jpg" />
+                                }
+                            </div>
+                            <div class="results__description">
+                                <span class="results__description-name">@result.Residence.Address</span>
+                            </div>
+                            <ul class="results__info">
+                                <li class="results__info-price"> @result.Residence.Cost$</li>
+                                <li class="results__info-price"> <button class="details"> Details</button></li>
+                                @if (canEdit)
+                                {
+                                    <li class="results__info-price">
+                                        <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                        <button class="compare" onclick="window.location.assign('/Residences/Delete?id=@result.ResidenceId'); event.preventDefault()">Remove listing</button>
+                                    </li>
+                                }
+                            </ul>
+                        </a>
+                    }
+                </div>
             </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

@@ -16,6 +16,11 @@
                 {
                 <div class="flat__photo">
                     <img alt="" src="@photo.Path" />
+                    @if (canEdit)
+                    {
+                        <br />
+                        <a asp-controller="ResidencePhotos" asp-action="Delete" asp-route-id="@photo.Id" style="color: red;">Delete</a>
+                    }
                 </div>
                 }
             </div>
