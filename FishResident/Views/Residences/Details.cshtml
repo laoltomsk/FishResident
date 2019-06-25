@@ -1,0 +1,85 @@
+﻿@using FishResident.Services
+@model FishResident.Models.Residence
+@inject IPermissionService UserPermissions
+
+@{
+    ViewData["Title"] = "Details";
+    var canEdit = UserPermissions.IsOwnerOfResidence(Model);
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Residence</h4>
+    @if (canEdit)
+    {
+        <p>
+            <a asp-action="Create" asp-controller="ResidencePhotos" asp-route-residenceId="@Model.Id" class="btn btn-default">Create New</a>
+        </p>
+    }
+    <div class="row">
+        @foreach (var item in Model.ResidencePhotos)
+        {
+            <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                    <img src="@item.Path" alt="Image" />
+                    @if (canEdit)
+                    {
+                        <div class="caption">
+                            <p><a asp-action="Delete" asp-controller="ResidencePhotos" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Area)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Area)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Cost)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Cost)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type.Name)
+        </dd>
+        @foreach (var feature in Model.Features.OrderBy(r => r.FeatureType.Name).ToList())
+        {
+            <dt>
+                @feature.FeatureType.Name
+            </dt>
+            <dd>
+                @feature.Value
+            </dd>
+        }
+    </dl>
+</div>
+<div>
+    @if (canEdit)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> <text>|</text>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace FishResident.Models
 {
-    public class FeatureRequest
+    public class RequestResult
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public String Value { get; set; }
+        public Double Relevance { get; set; }
 
         [Required]
         public Guid SearchRequestId { get; set; }
@@ -20,8 +20,8 @@ namespace FishResident.Models
         public SearchRequest SearchRequest { get; set; }
 
         [Required]
-        public Guid FeatureTypeId { get; set; }
+        public Guid ResidenceId { get; set; }
 
-        public FeatureType FeatureType { get; set; }
+        public Residence Residence { get; set; }
     }
 }

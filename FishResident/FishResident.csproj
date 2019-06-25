@@ -60,15 +60,40 @@
     <Compile Remove="Migrations\20190530164850_AddSearchRequests.Designer.cs" />
     <Compile Remove="Migrations\20190530170708_AddFeatureRequests.cs" />
     <Compile Remove="Migrations\20190530170708_AddFeatureRequests.Designer.cs" />
+    <Compile Remove="Migrations\20190605104854_SeedDataPart1.cs" />
+    <Compile Remove="Migrations\20190605104854_SeedDataPart1.Designer.cs" />
+    <Compile Remove="Migrations\20190605110320_SeedDataPart2.cs" />
+    <Compile Remove="Migrations\20190605110320_SeedDataPart2.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.9" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Models\ViewModels\" />
+    <Folder Include="wwwroot\attachments\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Requests\Create.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Requests\Delete.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Requests\Details.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Requests\Edit.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+    <Content Update="Views\Requests\Index.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
   </ItemGroup>
 
 </Project>

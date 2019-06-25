@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using FishResident.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using FishResident.Models;
+using FishResident.Services;
 
 namespace FishResident
 {
@@ -37,10 +39,15 @@ namespace FishResident
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+
+            services.AddDefaultIdentity<ApplicationUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<FeatureService>();
+            services.AddHostedService<TimedUpdateRequestsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

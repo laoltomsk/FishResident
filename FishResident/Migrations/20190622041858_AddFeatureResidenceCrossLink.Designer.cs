@@ -4,18 +4,20 @@ using FishResident.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FishResident.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190622041858_AddFeatureResidenceCrossLink")]
+    partial class AddFeatureResidenceCrossLink
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.11-servicing-32099")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -148,81 +150,81 @@ namespace FishResident.Migrations
                     b.ToTable("FeatureAllowedValues");
 
                     b.HasData(
-                        new { Id = new Guid("371583e5-a027-4187-a34a-c50b6c462be4"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "0" },
-                        new { Id = new Guid("430be869-086e-452f-a7af-e5ccf21eb7ef"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "1" },
-                        new { Id = new Guid("e4c3f118-b7f8-42c2-b87c-c0076a0057eb"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "2" },
-                        new { Id = new Guid("de200a46-7177-4bd0-8429-5bbb9d8e2f59"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "3" },
-                        new { Id = new Guid("75cc8351-3d9e-49b0-b9d9-d123cadb7157"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "4" },
-                        new { Id = new Guid("10fca286-a2f5-4373-86e6-d3f7d4f6a8db"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "5" },
-                        new { Id = new Guid("e3cb758a-a63f-45ea-8563-2a498e38e061"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "6" },
-                        new { Id = new Guid("3579ac6c-1e48-405b-b4be-ed06d32d956f"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "7" },
-                        new { Id = new Guid("1fe88340-aac3-4396-84e9-e42285780359"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "8" },
-                        new { Id = new Guid("b0fceb4f-7272-4569-b9b1-9c70d05cd166"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "9" },
-                        new { Id = new Guid("15f5dd76-4111-4ecb-98a1-4f0f140def09"), FeatureTypeId = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Value = "10+" },
-                        new { Id = new Guid("2f16cf96-8c72-4745-9210-ed1fb8cda7ec"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "0" },
-                        new { Id = new Guid("153f5e99-a8b6-4f2c-9418-2bf818fd0df5"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "1" },
-                        new { Id = new Guid("3d254ed3-8ac0-448c-84c7-696e3bc82dc4"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "2" },
-                        new { Id = new Guid("07ff9055-786e-44fb-b5c5-43d41d11575d"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "3" },
-                        new { Id = new Guid("c6c2dd0a-6d43-40ad-9e30-4c22e68d17a5"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "4" },
-                        new { Id = new Guid("6a75ee03-a0f4-42ae-bcb8-14ff1354f050"), FeatureTypeId = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Value = "5+" },
-                        new { Id = new Guid("ec2146d5-01dd-46f6-9851-df2401a81f3e"), FeatureTypeId = new Guid("3777f6ea-4fa8-4919-9a5b-2ae12137fdfa"), Value = "Small" },
-                        new { Id = new Guid("ad79649c-0be9-4695-8855-9775e29b5f49"), FeatureTypeId = new Guid("3777f6ea-4fa8-4919-9a5b-2ae12137fdfa"), Value = "Medium" },
-                        new { Id = new Guid("5962bdec-8fd5-4fb4-b804-a290310edb08"), FeatureTypeId = new Guid("3777f6ea-4fa8-4919-9a5b-2ae12137fdfa"), Value = "Large" },
-                        new { Id = new Guid("1368d541-caae-4a86-a6ac-50819d85a0be"), FeatureTypeId = new Guid("935a2401-4216-4468-b483-afd1cee85652"), Value = "Yes" },
-                        new { Id = new Guid("e00f0364-81aa-47f1-abf5-c742622e709b"), FeatureTypeId = new Guid("935a2401-4216-4468-b483-afd1cee85652"), Value = "No" },
-                        new { Id = new Guid("7f7e6921-2782-4714-89ff-1901ea94df98"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "0" },
-                        new { Id = new Guid("2b29a1bf-304c-4646-a587-3f95dc36cfec"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "1" },
-                        new { Id = new Guid("cf940867-6aa6-4061-9f27-2cec59861883"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "2" },
-                        new { Id = new Guid("68cb02f9-64e2-46e8-b5fe-ff62b281f667"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "3" },
-                        new { Id = new Guid("8968cde2-f72b-4bf1-9bba-8c9045407b0e"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "4" },
-                        new { Id = new Guid("62978837-76fb-4b60-8499-4d517d5b384b"), FeatureTypeId = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Value = "5+" },
-                        new { Id = new Guid("e4329fe2-496a-4306-a315-a5a6944c5d28"), FeatureTypeId = new Guid("843cecf7-eb2d-402e-9b3a-dbc22be44763"), Value = "Yes" },
-                        new { Id = new Guid("4f671e4f-8652-4bc5-b042-4ee4c894575a"), FeatureTypeId = new Guid("843cecf7-eb2d-402e-9b3a-dbc22be44763"), Value = "No" },
-                        new { Id = new Guid("a5847987-3d78-4efe-b8c0-60923af1f518"), FeatureTypeId = new Guid("662e7284-993a-4edd-8ad0-657a7690ad3d"), Value = "Yes" },
-                        new { Id = new Guid("0e9c4753-db78-4a19-9430-3839e1d8e02f"), FeatureTypeId = new Guid("662e7284-993a-4edd-8ad0-657a7690ad3d"), Value = "No" },
-                        new { Id = new Guid("c6875619-7f16-4d45-a5a3-35477939c868"), FeatureTypeId = new Guid("1d82efbd-1fa1-400a-aa15-546eb9947ef4"), Value = "Balcony" },
-                        new { Id = new Guid("c6127f53-244b-47ed-ad76-f57fe78a7e04"), FeatureTypeId = new Guid("1d82efbd-1fa1-400a-aa15-546eb9947ef4"), Value = "Patio" },
-                        new { Id = new Guid("7dd10cfb-dae0-4012-bfa8-fd685d059ca3"), FeatureTypeId = new Guid("1d82efbd-1fa1-400a-aa15-546eb9947ef4"), Value = "Deck" },
-                        new { Id = new Guid("12364e76-a2af-4046-bf46-f1fca3ecb7e7"), FeatureTypeId = new Guid("5d505314-3947-40cf-b8cc-a0224e780c36"), Value = "Yes" },
-                        new { Id = new Guid("14809422-3d4d-462b-bcb2-301ef49016d6"), FeatureTypeId = new Guid("5d505314-3947-40cf-b8cc-a0224e780c36"), Value = "No" },
-                        new { Id = new Guid("26c404ce-b1ef-4351-8117-59eea602a84c"), FeatureTypeId = new Guid("e653f2ac-6e05-4f7a-adc3-0ae11183d822"), Value = "Yes" },
-                        new { Id = new Guid("6ee514f1-9722-410a-92af-12b5528088b0"), FeatureTypeId = new Guid("e653f2ac-6e05-4f7a-adc3-0ae11183d822"), Value = "No" },
-                        new { Id = new Guid("e4ef8a34-046b-40c3-8c1b-7011a19fa499"), FeatureTypeId = new Guid("8607248d-c702-47c2-9f84-871dc07ee6b1"), Value = "Yes" },
-                        new { Id = new Guid("7de80471-201f-4c74-9515-f716c2360bb6"), FeatureTypeId = new Guid("8607248d-c702-47c2-9f84-871dc07ee6b1"), Value = "No" },
-                        new { Id = new Guid("0cee74a2-c538-430a-9c85-bf2ad760f0c7"), FeatureTypeId = new Guid("eca0bf1a-721a-432a-9fd9-ab5e93e7c9a4"), Value = "Yes" },
-                        new { Id = new Guid("9b6050de-df33-4207-b8a8-421ecb18a26d"), FeatureTypeId = new Guid("eca0bf1a-721a-432a-9fd9-ab5e93e7c9a4"), Value = "No" },
-                        new { Id = new Guid("e058d5fc-4a4b-4753-8b87-b385ed5e49b4"), FeatureTypeId = new Guid("2abdc1d5-b4c8-497e-8a6a-bfe34ba0918d"), Value = "Yes" },
-                        new { Id = new Guid("86da023e-f8bd-4062-a0f4-017316409c8f"), FeatureTypeId = new Guid("2abdc1d5-b4c8-497e-8a6a-bfe34ba0918d"), Value = "No" },
-                        new { Id = new Guid("bce46a5b-eefe-4874-8f4e-c7ab99efa5a7"), FeatureTypeId = new Guid("2b90c7d6-f505-402e-846f-5d8695904469"), Value = "Some" },
-                        new { Id = new Guid("e72def4c-b107-4cba-afea-f40086fa3311"), FeatureTypeId = new Guid("2b90c7d6-f505-402e-846f-5d8695904469"), Value = "All" },
-                        new { Id = new Guid("9ab68685-6b03-4b16-8999-0f165b4aaab7"), FeatureTypeId = new Guid("6423a58c-526e-46be-8b74-1f8a63913396"), Value = "Yes" },
-                        new { Id = new Guid("0d4c5be1-469b-4027-89fe-8174b0dde4a1"), FeatureTypeId = new Guid("6423a58c-526e-46be-8b74-1f8a63913396"), Value = "No" },
-                        new { Id = new Guid("53835a1a-fb0e-4b39-96de-2cbe59a54f50"), FeatureTypeId = new Guid("c0511c5b-dd2e-442e-9fe1-1098b09c73d5"), Value = "Yes" },
-                        new { Id = new Guid("18c888bf-a739-4028-b18f-fbab0a4bc363"), FeatureTypeId = new Guid("c0511c5b-dd2e-442e-9fe1-1098b09c73d5"), Value = "No" },
-                        new { Id = new Guid("0d4fa3e5-540d-4232-b576-b0bf74d39388"), FeatureTypeId = new Guid("6cbb517d-361c-4216-a509-e30ad8fd0cad"), Value = "Yes" },
-                        new { Id = new Guid("805fa77f-7403-4d9d-8929-f82f9977ae06"), FeatureTypeId = new Guid("6cbb517d-361c-4216-a509-e30ad8fd0cad"), Value = "No" },
-                        new { Id = new Guid("8dcdb282-ef26-4075-9ffc-14bc81c7e668"), FeatureTypeId = new Guid("f3326a7f-7912-44a7-8321-5e037579dc08"), Value = "Yes" },
-                        new { Id = new Guid("1f3ac459-b631-4c3c-9e7f-200340204084"), FeatureTypeId = new Guid("f3326a7f-7912-44a7-8321-5e037579dc08"), Value = "No" },
-                        new { Id = new Guid("6b02be10-2439-47d0-bde6-66e49ea3c531"), FeatureTypeId = new Guid("ca1de205-a1d6-4045-bbf5-42a2381788cb"), Value = "Yes" },
-                        new { Id = new Guid("1b1593b5-9e8f-467b-82ac-e6759709e94c"), FeatureTypeId = new Guid("ca1de205-a1d6-4045-bbf5-42a2381788cb"), Value = "No" },
-                        new { Id = new Guid("ce0478e7-7745-4378-919f-e616bda9ca9a"), FeatureTypeId = new Guid("77422477-bd42-40f9-a870-5113f9717224"), Value = "Yes" },
-                        new { Id = new Guid("3d6d3c5a-7bca-4be6-bf76-da3f199f2675"), FeatureTypeId = new Guid("77422477-bd42-40f9-a870-5113f9717224"), Value = "No" },
-                        new { Id = new Guid("c32ef135-ccbf-44f2-8d33-9bd929f0f9a0"), FeatureTypeId = new Guid("e0d83d70-4e98-41e8-b98a-ef0880d5edce"), Value = "Yes" },
-                        new { Id = new Guid("c9dc0355-ee11-466f-8ce3-845531704ce3"), FeatureTypeId = new Guid("e0d83d70-4e98-41e8-b98a-ef0880d5edce"), Value = "No" },
-                        new { Id = new Guid("48a99d4d-aa12-4854-9a19-0e6de3a5d4f0"), FeatureTypeId = new Guid("84fccd29-12d5-4096-bd1d-2fd77dd59fa1"), Value = "Yes" },
-                        new { Id = new Guid("105b28b5-ec3d-4087-a1ef-537d138ed0ed"), FeatureTypeId = new Guid("84fccd29-12d5-4096-bd1d-2fd77dd59fa1"), Value = "No" },
-                        new { Id = new Guid("ba8b5e34-1ad7-4034-8a70-b6a3f7d43c75"), FeatureTypeId = new Guid("d631c563-0b8c-45ca-ae7c-15f8827266cc"), Value = "Yes" },
-                        new { Id = new Guid("80386187-a327-4adc-9d13-b6f215bd5349"), FeatureTypeId = new Guid("d631c563-0b8c-45ca-ae7c-15f8827266cc"), Value = "No" },
-                        new { Id = new Guid("6c7b7beb-5795-4864-8799-6e8b773ee7f0"), FeatureTypeId = new Guid("5fa0a74d-10fe-4de3-ba47-93b99d00beff"), Value = "Yes" },
-                        new { Id = new Guid("74ebacac-6c9f-446c-b800-58494979fa83"), FeatureTypeId = new Guid("5fa0a74d-10fe-4de3-ba47-93b99d00beff"), Value = "No" },
-                        new { Id = new Guid("aa59e5c8-38b4-4274-a470-b635e76b35e6"), FeatureTypeId = new Guid("3a9eaf77-634b-45d8-8f34-fa07fa72cedb"), Value = "Yes" },
-                        new { Id = new Guid("4f8a97e7-3ec8-4eaf-bce5-b91aa4b16440"), FeatureTypeId = new Guid("3a9eaf77-634b-45d8-8f34-fa07fa72cedb"), Value = "No" },
-                        new { Id = new Guid("f4f31bc8-594a-48bf-9550-877646613536"), FeatureTypeId = new Guid("a8b7a318-cd71-44b9-887a-edbaadee4be0"), Value = "Yes" },
-                        new { Id = new Guid("361fe102-994d-410d-8da2-869f588b6ce9"), FeatureTypeId = new Guid("a8b7a318-cd71-44b9-887a-edbaadee4be0"), Value = "No" },
-                        new { Id = new Guid("8a3e257c-c7f3-402f-b709-3edfc17a2f17"), FeatureTypeId = new Guid("a7d0f6b0-a8c8-4fb4-bf80-bb3911843fe2"), Value = "Downtown" },
-                        new { Id = new Guid("4866fa72-6831-48d1-a942-ce9b928ea368"), FeatureTypeId = new Guid("a7d0f6b0-a8c8-4fb4-bf80-bb3911843fe2"), Value = "Uptown" },
-                        new { Id = new Guid("4ce0f968-3bd5-42c5-bad5-ea052d45f188"), FeatureTypeId = new Guid("a7d0f6b0-a8c8-4fb4-bf80-bb3911843fe2"), Value = "Rural" },
-                        new { Id = new Guid("16429369-f53e-41dc-a603-957b911007b5"), FeatureTypeId = new Guid("a7d0f6b0-a8c8-4fb4-bf80-bb3911843fe2"), Value = "Suburban" }
+                        new { Id = new Guid("72a0a7e7-1aa7-4beb-a26b-e3f3c2ff709a"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "0" },
+                        new { Id = new Guid("7979c7a8-9507-4a53-874f-5b0b7eea9e41"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "1" },
+                        new { Id = new Guid("3d652af7-a024-473d-b3f8-70745c162a80"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "2" },
+                        new { Id = new Guid("3cedd797-1b92-48fd-ab5d-9574a21acd49"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "3" },
+                        new { Id = new Guid("aae69cdd-57f6-413a-a065-4c5ccd63a102"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "4" },
+                        new { Id = new Guid("c6dba12c-6d41-40e5-bdd9-59fb16907ccc"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "5" },
+                        new { Id = new Guid("aa2b5fa9-5a3f-4930-b110-46f3a22686f4"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "6" },
+                        new { Id = new Guid("f3ccde84-315d-4d5a-b7d4-8d62a8d42815"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "7" },
+                        new { Id = new Guid("9538c1c0-4e4c-453c-97ae-d6072bbb5f93"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "8" },
+                        new { Id = new Guid("36993148-8e66-4101-8cb9-b146f6cc6b84"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "9" },
+                        new { Id = new Guid("4c1694e9-ce32-43c5-aca0-ad359dca4316"), FeatureTypeId = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Value = "10+" },
+                        new { Id = new Guid("2ad5d191-4641-46ff-bb95-0f0b8fce05bf"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "0" },
+                        new { Id = new Guid("0b943590-47a8-4e85-83f7-ffb21a82fcd1"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "1" },
+                        new { Id = new Guid("29575c8d-1c42-4ed5-b346-39c107005f19"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "2" },
+                        new { Id = new Guid("cdcc2d12-f88b-449f-9a2d-b1ada25231a4"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "3" },
+                        new { Id = new Guid("be6f725a-108d-4539-a5fa-4e09c5b60258"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "4" },
+                        new { Id = new Guid("0f425c1b-2fb3-4560-be12-6ac74effe085"), FeatureTypeId = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Value = "5+" },
+                        new { Id = new Guid("f2ddb95c-a092-4763-ad37-e3cbd629dc99"), FeatureTypeId = new Guid("32d46f35-264c-4f1d-9755-58fe47f996ce"), Value = "Small" },
+                        new { Id = new Guid("f59a6531-9614-4099-8f95-26deb4005df8"), FeatureTypeId = new Guid("32d46f35-264c-4f1d-9755-58fe47f996ce"), Value = "Medium" },
+                        new { Id = new Guid("ff7b0d03-068f-454e-b2ed-121f073b40ff"), FeatureTypeId = new Guid("32d46f35-264c-4f1d-9755-58fe47f996ce"), Value = "Large" },
+                        new { Id = new Guid("9c5d3ecf-9972-4fdb-a409-96a0ee056053"), FeatureTypeId = new Guid("1f0f7f57-9ca7-46db-9f96-9803a67bddf9"), Value = "Yes" },
+                        new { Id = new Guid("d54bab22-d4b6-4354-958f-3c932ebe7ae7"), FeatureTypeId = new Guid("1f0f7f57-9ca7-46db-9f96-9803a67bddf9"), Value = "No" },
+                        new { Id = new Guid("81f92f2e-75d3-485f-900a-c745f60c8dab"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "0" },
+                        new { Id = new Guid("44cf4611-4927-4f7d-821e-cc4ced783f25"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "1" },
+                        new { Id = new Guid("38f64d90-3dc1-4e3d-8337-5b408959523a"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "2" },
+                        new { Id = new Guid("226c7895-0b0a-4c3a-9018-6b1147e592d6"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "3" },
+                        new { Id = new Guid("39b73610-f765-466d-9d4a-5bb09117ef19"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "4" },
+                        new { Id = new Guid("633d9d32-8b08-48fe-8e86-ebfc7bbe2043"), FeatureTypeId = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Value = "5+" },
+                        new { Id = new Guid("17c087ba-fda6-4864-8e75-2aa76822ad19"), FeatureTypeId = new Guid("32c68e50-b7c4-480b-b99d-5a1029013008"), Value = "Yes" },
+                        new { Id = new Guid("bc89da33-c742-488d-96f5-55fdcecdcde0"), FeatureTypeId = new Guid("32c68e50-b7c4-480b-b99d-5a1029013008"), Value = "No" },
+                        new { Id = new Guid("389ba9b3-b250-4328-a893-94fbe2641617"), FeatureTypeId = new Guid("241b1aea-a621-4b7f-97dc-4a919e766cc1"), Value = "Yes" },
+                        new { Id = new Guid("4eec8bff-c956-4751-938c-3536baac34c0"), FeatureTypeId = new Guid("241b1aea-a621-4b7f-97dc-4a919e766cc1"), Value = "No" },
+                        new { Id = new Guid("ebf81f63-eb17-4054-91d2-46c41f63ef97"), FeatureTypeId = new Guid("e673c6ef-205d-4a64-bbfa-2cfb031a058b"), Value = "Balcony" },
+                        new { Id = new Guid("d6618a99-88ff-49a7-b0c1-5dca60b5c431"), FeatureTypeId = new Guid("e673c6ef-205d-4a64-bbfa-2cfb031a058b"), Value = "Patio" },
+                        new { Id = new Guid("76dae61f-f407-4b0c-8c9f-98b4c06f17e2"), FeatureTypeId = new Guid("e673c6ef-205d-4a64-bbfa-2cfb031a058b"), Value = "Deck" },
+                        new { Id = new Guid("9a9da049-e0ff-4fb2-8893-4e0d727b7579"), FeatureTypeId = new Guid("42c557ff-6e22-4642-a304-d86730c0e11d"), Value = "Yes" },
+                        new { Id = new Guid("4c02cc1d-2f86-44e1-a487-9dea5201771e"), FeatureTypeId = new Guid("42c557ff-6e22-4642-a304-d86730c0e11d"), Value = "No" },
+                        new { Id = new Guid("af2fee2f-b6a2-4c97-acad-12280e53ec36"), FeatureTypeId = new Guid("0542d629-c468-4004-b9a0-745230d56cc2"), Value = "Yes" },
+                        new { Id = new Guid("ea8e84cd-8e0e-4d20-aa24-817496738ae2"), FeatureTypeId = new Guid("0542d629-c468-4004-b9a0-745230d56cc2"), Value = "No" },
+                        new { Id = new Guid("e9671702-f554-4b22-af0c-b4e1885055c1"), FeatureTypeId = new Guid("8980b976-30b2-4a69-a617-25715eb4e1e3"), Value = "Yes" },
+                        new { Id = new Guid("3ce87301-b852-4276-b26f-5fcde279c5e5"), FeatureTypeId = new Guid("8980b976-30b2-4a69-a617-25715eb4e1e3"), Value = "No" },
+                        new { Id = new Guid("68a3d7e4-1591-45f7-bde6-b457d7ba53fd"), FeatureTypeId = new Guid("d760b0b6-0c87-45f9-b18d-6814da8ab9c7"), Value = "Yes" },
+                        new { Id = new Guid("65f6930b-c2f3-4ef9-bba6-2c638ad2b85a"), FeatureTypeId = new Guid("d760b0b6-0c87-45f9-b18d-6814da8ab9c7"), Value = "No" },
+                        new { Id = new Guid("8caa2dd0-67ca-44a0-93a0-66d15cde01de"), FeatureTypeId = new Guid("6d727930-7c19-4f50-9a05-d05262520702"), Value = "Yes" },
+                        new { Id = new Guid("61c00035-bd9d-4345-84a5-07fa7ff5a446"), FeatureTypeId = new Guid("6d727930-7c19-4f50-9a05-d05262520702"), Value = "No" },
+                        new { Id = new Guid("039a58a8-fd7e-4fb0-a97a-acef06d56265"), FeatureTypeId = new Guid("78fb7d33-70ea-41bb-80ee-c0255a775b5d"), Value = "Some" },
+                        new { Id = new Guid("25959c31-c5b0-4747-85aa-b201fb3f7232"), FeatureTypeId = new Guid("78fb7d33-70ea-41bb-80ee-c0255a775b5d"), Value = "All" },
+                        new { Id = new Guid("d4470725-845d-4ef8-843e-c42735792a22"), FeatureTypeId = new Guid("8c9c7054-dcce-48eb-bc7a-059ae22745c4"), Value = "Yes" },
+                        new { Id = new Guid("b6979220-ee3a-4993-9f08-27a03d8ed394"), FeatureTypeId = new Guid("8c9c7054-dcce-48eb-bc7a-059ae22745c4"), Value = "No" },
+                        new { Id = new Guid("62aa4ab2-1bbf-4c09-8853-4693389106fd"), FeatureTypeId = new Guid("9fa46264-7fae-4744-8ea7-ad04669394d5"), Value = "Yes" },
+                        new { Id = new Guid("7b6cac69-de30-472c-adbb-4befa7415293"), FeatureTypeId = new Guid("9fa46264-7fae-4744-8ea7-ad04669394d5"), Value = "No" },
+                        new { Id = new Guid("e868a9d1-8f90-49db-bb96-21da1f26dd98"), FeatureTypeId = new Guid("70b5ecfd-12f6-4e60-9886-1b49b1778c81"), Value = "Yes" },
+                        new { Id = new Guid("41b01eea-b746-42f0-9e49-e82de4765627"), FeatureTypeId = new Guid("70b5ecfd-12f6-4e60-9886-1b49b1778c81"), Value = "No" },
+                        new { Id = new Guid("f484637b-cf63-4d82-9fb0-c42ac81ee4de"), FeatureTypeId = new Guid("bafb0cf0-4ebf-4010-8ef9-2ec02c2521f9"), Value = "Yes" },
+                        new { Id = new Guid("3ac34789-808a-4d8b-b32a-3695c2ae22c3"), FeatureTypeId = new Guid("bafb0cf0-4ebf-4010-8ef9-2ec02c2521f9"), Value = "No" },
+                        new { Id = new Guid("41320d03-b71f-41be-9cbf-8c4ac2151236"), FeatureTypeId = new Guid("f6a60487-f6ab-4b34-a404-8f7bf125e706"), Value = "Yes" },
+                        new { Id = new Guid("5c975808-4d0c-40aa-9260-cd9852c13b24"), FeatureTypeId = new Guid("f6a60487-f6ab-4b34-a404-8f7bf125e706"), Value = "No" },
+                        new { Id = new Guid("efc9ecd9-a5ea-4cb3-ac3a-9f432313676b"), FeatureTypeId = new Guid("bee7dd8f-b983-452f-ac5f-f689ee05bc30"), Value = "Yes" },
+                        new { Id = new Guid("72ac467e-e597-47d0-abdd-0d62060ddb8d"), FeatureTypeId = new Guid("bee7dd8f-b983-452f-ac5f-f689ee05bc30"), Value = "No" },
+                        new { Id = new Guid("a64b03c6-ac3d-41b4-a516-5a75024f7cfb"), FeatureTypeId = new Guid("77747d88-c262-45b3-8bc4-d90b386b3d1f"), Value = "Yes" },
+                        new { Id = new Guid("206bc52f-55cd-4fb5-9a3d-cdb3d0f0dd7e"), FeatureTypeId = new Guid("77747d88-c262-45b3-8bc4-d90b386b3d1f"), Value = "No" },
+                        new { Id = new Guid("00c4b370-cda4-4198-80e3-91e01c57c9e2"), FeatureTypeId = new Guid("a22b07df-9f9c-49a3-8613-e1de40a3c373"), Value = "Yes" },
+                        new { Id = new Guid("3bfcd22f-537c-47ff-a451-bd5e8fb3f334"), FeatureTypeId = new Guid("a22b07df-9f9c-49a3-8613-e1de40a3c373"), Value = "No" },
+                        new { Id = new Guid("2b5d3806-cbc6-4c17-8127-579cfcc631e0"), FeatureTypeId = new Guid("014e228d-9dfc-4b4a-87d4-5eb17633619c"), Value = "Yes" },
+                        new { Id = new Guid("dd315fc6-a3a6-4db1-af6f-8f18cd9e3cac"), FeatureTypeId = new Guid("014e228d-9dfc-4b4a-87d4-5eb17633619c"), Value = "No" },
+                        new { Id = new Guid("da2cab05-869b-417c-87bf-a1dd18a02e8c"), FeatureTypeId = new Guid("73b25aaf-245c-4218-9b78-1a4ae880e1c1"), Value = "Yes" },
+                        new { Id = new Guid("4d71be58-1c8c-43cf-b33b-72dbe24abbc3"), FeatureTypeId = new Guid("73b25aaf-245c-4218-9b78-1a4ae880e1c1"), Value = "No" },
+                        new { Id = new Guid("1d5db23d-f986-4f4e-a67c-8d38fd68768b"), FeatureTypeId = new Guid("32d90637-6e5e-40ce-8645-349446416dc4"), Value = "Yes" },
+                        new { Id = new Guid("e29e30d7-c3b1-4af0-b020-441f39496f36"), FeatureTypeId = new Guid("32d90637-6e5e-40ce-8645-349446416dc4"), Value = "No" },
+                        new { Id = new Guid("60d137fb-d794-441f-9b3d-09dfd181bc49"), FeatureTypeId = new Guid("ba23f734-ace2-4afc-8acb-d13302e9f977"), Value = "Yes" },
+                        new { Id = new Guid("c919cd6c-8b0f-422e-be9f-2be3514e6bb7"), FeatureTypeId = new Guid("ba23f734-ace2-4afc-8acb-d13302e9f977"), Value = "No" },
+                        new { Id = new Guid("3d929364-bd7c-47c9-a44e-c6d49e5e6efd"), FeatureTypeId = new Guid("a19f89ff-e115-432b-8f8e-86992b278bf1"), Value = "Downtown" },
+                        new { Id = new Guid("570b1c12-c5ae-41ba-926d-afd1045a59e0"), FeatureTypeId = new Guid("a19f89ff-e115-432b-8f8e-86992b278bf1"), Value = "Uptown" },
+                        new { Id = new Guid("6533fe30-16d1-47ae-af48-46c52db21cd6"), FeatureTypeId = new Guid("a19f89ff-e115-432b-8f8e-86992b278bf1"), Value = "Rural" },
+                        new { Id = new Guid("ecb6906e-a6d5-492e-b4c6-af930bcaa371"), FeatureTypeId = new Guid("a19f89ff-e115-432b-8f8e-86992b278bf1"), Value = "Suburban" }
                     );
                 });
 
@@ -231,7 +233,7 @@ namespace FishResident.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<Guid>("FeatureTypeId");
+                    b.Property<Guid>("FeatureId");
 
                     b.Property<Guid>("SearchRequestId");
 
@@ -239,7 +241,7 @@ namespace FishResident.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FeatureTypeId");
+                    b.HasIndex("FeatureId");
 
                     b.HasIndex("SearchRequestId");
 
@@ -260,33 +262,33 @@ namespace FishResident.Migrations
                     b.ToTable("FeatureTypes");
 
                     b.HasData(
-                        new { Id = new Guid("53864adb-e980-48a6-bbe8-e20f31208da4"), Name = "Number of Bedrooms" },
-                        new { Id = new Guid("85077373-adfc-4f4f-8ce7-972cecbc6935"), Name = "Number of Bathrooms" },
-                        new { Id = new Guid("3777f6ea-4fa8-4919-9a5b-2ae12137fdfa"), Name = "Kitchen size" },
-                        new { Id = new Guid("935a2401-4216-4468-b483-afd1cee85652"), Name = "Garage" },
-                        new { Id = new Guid("dd9c5aba-7997-4b1d-a748-43e5e24964d7"), Name = "Number of Auto Spaces" },
-                        new { Id = new Guid("843cecf7-eb2d-402e-9b3a-dbc22be44763"), Name = "Pets Allowed" },
-                        new { Id = new Guid("662e7284-993a-4edd-8ad0-657a7690ad3d"), Name = "Air Conditioning" },
-                        new { Id = new Guid("1d82efbd-1fa1-400a-aa15-546eb9947ef4"), Name = "Balcony Type" },
-                        new { Id = new Guid("5d505314-3947-40cf-b8cc-a0224e780c36"), Name = "Cable Ready" },
-                        new { Id = new Guid("e653f2ac-6e05-4f7a-adc3-0ae11183d822"), Name = "Dishwasher" },
-                        new { Id = new Guid("8607248d-c702-47c2-9f84-871dc07ee6b1"), Name = "Microwave Included" },
-                        new { Id = new Guid("eca0bf1a-721a-432a-9fd9-ab5e93e7c9a4"), Name = "Handicap Accessible" },
-                        new { Id = new Guid("2abdc1d5-b4c8-497e-8a6a-bfe34ba0918d"), Name = "Hardwood Floors" },
-                        new { Id = new Guid("2b90c7d6-f505-402e-846f-5d8695904469"), Name = "Utilities Covered" },
-                        new { Id = new Guid("6423a58c-526e-46be-8b74-1f8a63913396"), Name = "Walk-In Closets" },
-                        new { Id = new Guid("c0511c5b-dd2e-442e-9fe1-1098b09c73d5"), Name = "Washer/Dryer Included" },
-                        new { Id = new Guid("6cbb517d-361c-4216-a509-e30ad8fd0cad"), Name = "Security System" },
-                        new { Id = new Guid("f3326a7f-7912-44a7-8321-5e037579dc08"), Name = "Limited/Controlled Access" },
-                        new { Id = new Guid("ca1de205-a1d6-4045-bbf5-42a2381788cb"), Name = "Elevator" },
-                        new { Id = new Guid("77422477-bd42-40f9-a870-5113f9717224"), Name = "Extra Storage" },
-                        new { Id = new Guid("e0d83d70-4e98-41e8-b98a-ef0880d5edce"), Name = "Fitness Center Nearby" },
-                        new { Id = new Guid("84fccd29-12d5-4096-bd1d-2fd77dd59fa1"), Name = "Business Center Nearby" },
-                        new { Id = new Guid("d631c563-0b8c-45ca-ae7c-15f8827266cc"), Name = "Laundry Facility Nearby" },
-                        new { Id = new Guid("5fa0a74d-10fe-4de3-ba47-93b99d00beff"), Name = "Pool Nearby" },
-                        new { Id = new Guid("3a9eaf77-634b-45d8-8f34-fa07fa72cedb"), Name = "Park Nearby" },
-                        new { Id = new Guid("a8b7a318-cd71-44b9-887a-edbaadee4be0"), Name = "Senior Living" },
-                        new { Id = new Guid("a7d0f6b0-a8c8-4fb4-bf80-bb3911843fe2"), Name = "Neighbourhood Type" }
+                        new { Id = new Guid("57da0413-a037-44e9-8272-4224f051a5c5"), Name = "Number of Bedrooms" },
+                        new { Id = new Guid("41efd607-b905-4e75-a96c-c5a0721e9f64"), Name = "Number of Bathrooms" },
+                        new { Id = new Guid("32d46f35-264c-4f1d-9755-58fe47f996ce"), Name = "Kitchen size" },
+                        new { Id = new Guid("1f0f7f57-9ca7-46db-9f96-9803a67bddf9"), Name = "Garage" },
+                        new { Id = new Guid("33316ebf-7b34-49d8-91db-0a37948123cc"), Name = "Number of Auto Spaces" },
+                        new { Id = new Guid("32c68e50-b7c4-480b-b99d-5a1029013008"), Name = "Pets Allowed" },
+                        new { Id = new Guid("241b1aea-a621-4b7f-97dc-4a919e766cc1"), Name = "Air Conditioning" },
+                        new { Id = new Guid("e673c6ef-205d-4a64-bbfa-2cfb031a058b"), Name = "Balcony Type" },
+                        new { Id = new Guid("42c557ff-6e22-4642-a304-d86730c0e11d"), Name = "Cable Ready" },
+                        new { Id = new Guid("0542d629-c468-4004-b9a0-745230d56cc2"), Name = "Dishwasher" },
+                        new { Id = new Guid("8980b976-30b2-4a69-a617-25715eb4e1e3"), Name = "Microwave Included" },
+                        new { Id = new Guid("d760b0b6-0c87-45f9-b18d-6814da8ab9c7"), Name = "Handicap Accessible" },
+                        new { Id = new Guid("6d727930-7c19-4f50-9a05-d05262520702"), Name = "Hardwood Floors" },
+                        new { Id = new Guid("78fb7d33-70ea-41bb-80ee-c0255a775b5d"), Name = "Utilities Covered" },
+                        new { Id = new Guid("8c9c7054-dcce-48eb-bc7a-059ae22745c4"), Name = "Walk-In Closets" },
+                        new { Id = new Guid("9fa46264-7fae-4744-8ea7-ad04669394d5"), Name = "Washer/Dryer Included" },
+                        new { Id = new Guid("70b5ecfd-12f6-4e60-9886-1b49b1778c81"), Name = "Security System" },
+                        new { Id = new Guid("bafb0cf0-4ebf-4010-8ef9-2ec02c2521f9"), Name = "Limited/Controlled Access" },
+                        new { Id = new Guid("f6a60487-f6ab-4b34-a404-8f7bf125e706"), Name = "Elevator" },
+                        new { Id = new Guid("bee7dd8f-b983-452f-ac5f-f689ee05bc30"), Name = "Extra Storage" },
+                        new { Id = new Guid("77747d88-c262-45b3-8bc4-d90b386b3d1f"), Name = "Fitness Center Nearby" },
+                        new { Id = new Guid("a22b07df-9f9c-49a3-8613-e1de40a3c373"), Name = "Business Center Nearby" },
+                        new { Id = new Guid("014e228d-9dfc-4b4a-87d4-5eb17633619c"), Name = "Laundry Facility Nearby" },
+                        new { Id = new Guid("73b25aaf-245c-4218-9b78-1a4ae880e1c1"), Name = "Pool Nearby" },
+                        new { Id = new Guid("32d90637-6e5e-40ce-8645-349446416dc4"), Name = "Park Nearby" },
+                        new { Id = new Guid("ba23f734-ace2-4afc-8acb-d13302e9f977"), Name = "Senior Living" },
+                        new { Id = new Guid("a19f89ff-e115-432b-8f8e-86992b278bf1"), Name = "Neighbourhood Type" }
                     );
                 });
 
@@ -306,26 +308,6 @@ namespace FishResident.Migrations
                     b.ToTable("FeatureValues");
                 });
 
-            modelBuilder.Entity("FishResident.Models.RequestResult", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<double>("Relevance");
-
-                    b.Property<Guid>("ResidenceId");
-
-                    b.Property<Guid>("SearchRequestId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ResidenceId");
-
-                    b.HasIndex("SearchRequestId");
-
-                    b.ToTable("RequestResults");
-                });
-
             modelBuilder.Entity("FishResident.Models.Residence", b =>
                 {
                     b.Property<Guid>("Id")
@@ -340,11 +322,15 @@ namespace FishResident.Migrations
                     b.Property<string>("OwnerId")
                         .IsRequired();
 
+                    b.Property<Guid?>("SearchRequestId");
+
                     b.Property<Guid>("TypeId");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OwnerId");
+
+                    b.HasIndex("SearchRequestId");
 
                     b.HasIndex("TypeId");
 
@@ -390,10 +376,6 @@ namespace FishResident.Migrations
 
                     b.Property<string>("Address");
 
-                    b.Property<double>("Area");
-
-                    b.Property<double>("Cost");
-
                     b.Property<string>("UserId")
                         .IsRequired();
 
@@ -425,16 +407,6 @@ namespace FishResident.Migrations
                     b.HasIndex("SubscriberId");
 
                     b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("FishResident.Models.TempResidence", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TempResidences");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -594,9 +566,9 @@ namespace FishResident.Migrations
 
             modelBuilder.Entity("FishResident.Models.FeatureRequest", b =>
                 {
-                    b.HasOne("FishResident.Models.FeatureType", "FeatureType")
+                    b.HasOne("FishResident.Models.Feature", "Feature")
                         .WithMany()
-                        .HasForeignKey("FeatureTypeId")
+                        .HasForeignKey("FeatureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("FishResident.Models.SearchRequest", "SearchRequest")
@@ -613,25 +585,16 @@ namespace FishResident.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("FishResident.Models.RequestResult", b =>
-                {
-                    b.HasOne("FishResident.Models.Residence", "Residence")
-                        .WithMany("Requests")
-                        .HasForeignKey("ResidenceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("FishResident.Models.SearchRequest", "SearchRequest")
-                        .WithMany("Results")
-                        .HasForeignKey("SearchRequestId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("FishResident.Models.Residence", b =>
                 {
                     b.HasOne("FishResident.Models.ApplicationUser", "Owner")
                         .WithMany("Residences")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("FishResident.Models.SearchRequest")
+                        .WithMany("Results")
+                        .HasForeignKey("SearchRequestId");
 
                     b.HasOne("FishResident.Models.ResidenceType", "Type")
                         .WithMany()

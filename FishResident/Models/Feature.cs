@@ -16,6 +16,14 @@ namespace FishResident.Models
         
         public Guid? LinkedFeatureId { get; set; }
 
+        public Residence Residence { get; set; }
+
+        public Guid? ResidenceId { get; set; }
+
         public FeatureType FeatureType { get; set; }
+
+        public Guid? FeatureTypeId { get; set; }
+
+        public String Value { get; set; }
     }
 }

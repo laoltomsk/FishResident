@@ -32,5 +32,11 @@ namespace FishResident.Models
         public ResidenceType Type { get; set; }
 
         public ICollection<Agreement> Agreements { get; set; }
+
+        public ICollection<ResidencePhoto> ResidencePhotos { get; set; }
+
+        public ICollection<Feature> Features { get; set; }
+
+        public ICollection<RequestResult> Requests { get; set; }
     }
 }
