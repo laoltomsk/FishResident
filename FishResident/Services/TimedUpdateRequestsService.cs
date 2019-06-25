@@ -44,6 +44,10 @@ namespace FishResident.Services
                 var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
                 var updatedIds = dbContext.TempResidences.Take(ChunkSize).Select(i => i.Id);
+                if (!updatedIds.Any())
+                {
+                    return;
+                }
                 var residences = dbContext.Residences
                     .Include(r => r.Features)
                     .ThenInclude(f => f.FeatureType)
@@ -68,11 +72,14 @@ namespace FishResident.Services
                         foreach (var criteria in request.FeatureRequests)
                         {
                             var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.FeatureTypeId).First().Value;
-                            if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                            if (criteria.Value != "Not Specified")
                             {
-                                goodCriterias++;
+                                if (criteria.Value == residenceValue)
+                                {
+                                    goodCriterias++;
+                                }
+                                criterias++;
                             }
-                            criterias++;
                         }
 
                         if (goodCriterias / criterias > 0.75)
@@ -84,10 +91,13 @@ namespace FishResident.Services
                                 ResidenceId = residence.Id
                             };
 
-                            dbContext.RequestResults.Add(requestResult);
+                            var res = dbContext.RequestResults.Where(r =>
+                                r.ResidenceId == residence.Id && r.SearchRequestId == request.Id);
+                            if (!res.Any())
+                            {
+                                dbContext.RequestResults.Add(requestResult);
+                            }
                         }
-
-                        dbContext.SaveChangesAsync();
                     }
                 }
 

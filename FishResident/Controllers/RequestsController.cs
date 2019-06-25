@@ -124,12 +124,17 @@ namespace FishResident.Controllers
 
                     foreach (var criteria in model.Features)
                     {
-                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
-                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First()
+                            .Value;
+                        if (criteria.Value != "Not Specified")
                         {
-                            goodCriterias++;
+                            if (criteria.Value == residenceValue)
+                            {
+                                goodCriterias++;
+                            }
+                            criterias++;
                         }
-                        criterias++;
+
                     }
 
                     if (goodCriterias / criterias > 0.75)
