@@ -35,13 +35,15 @@
                                 @foreach (var featureType in featureTypes)
                                 {
                                     <span>@featureType.Name</span>
-                                    <select asp-for="Features[featureType.Id]" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
-                                        <option value="Not Specified">Not Specified</option>
-                                    </select>
-                                }
-                            </div>
-                            <button type="submit" class="btn _default _filters">Update search</button>
-                        </form>
+                                
+                                        <select asp-for="Features[featureType.Id]" class="field js-field"  asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
+                                            <option value="Not Specified">Not Specified</option>
+                                        </select>
+                                      
+                                        }
+                                    </div>
+                                    <button type="submit" class="btn _default _filters">Update search</button>
+</form>
                     </div>
                 </div>
                 <div class="results__items">

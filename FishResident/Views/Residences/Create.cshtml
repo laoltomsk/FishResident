@@ -31,13 +31,17 @@
                                 <input asp-for="Address" />
                             </div>
                             <span>Residence Type</span>
-                            <select asp-for="TypeId" class="field js-field" asp-items="@ViewBag.TypeId"></select>
-                            @foreach (var featureType in featureTypes)
-                            {
-                                <span>@featureType.Name</span>
-                                <select asp-for="Features[featureType.Id]" class="field js-field" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))"></select>
-                            }
-                            <button type="submit" class="btn _default _filters">Save changes</button>
+                         
+                                <select asp-for="TypeId" class="field js-field" asp-items="@ViewBag.TypeId"></select>
+                              
+                                @foreach (var featureType in featureTypes)
+                                {
+                                    <span>@featureType.Name</span>
+                                   
+                                        <select asp-for="Features[featureType.Id]" class="field js-field" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))"></select>
+                                  
+                                }
+                                <button type="submit" class="btn _default _filters">Save changes</button>
                         </form>
                     </div>
                 </div>

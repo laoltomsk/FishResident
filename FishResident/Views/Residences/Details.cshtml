@@ -5,6 +5,7 @@
 @{
     ViewData["Title"] = "Details";
     var canEdit = UserPermissions.IsOwnerOfResidence(Model);
+    int i = 0;
 }
 
 <div class="container-fluid _flat">
@@ -14,14 +15,14 @@
             <div class="flat__photos">
                 @foreach (ResidencePhoto photo in Model.ResidencePhotos)
                 {
-                <div class="flat__photo">
-                    <img alt="" src="@photo.Path" />
-                    @if (canEdit)
-                    {
-                        <br />
-                        <a asp-controller="ResidencePhotos" asp-action="Delete" asp-route-id="@photo.Id" style="color: red;">Delete</a>
-                    }
-                </div>
+                    <div class="flat__photo">
+                        <img alt="" src="@photo.Path" />
+                        @if (canEdit)
+                        {
+                            <br />
+                            <a asp-controller="ResidencePhotos" asp-action="Delete" asp-route-id="@photo.Id" style="color: red;">Delete</a>
+                        }
+                    </div>
                 }
             </div>
             <div class="flat__description">
@@ -33,17 +34,29 @@
                     @foreach (var feature in Model.Features)
                     {
                         <li class="results__info-price">@feature.FeatureType.Name: @feature.Value</li>
+                        i++;
+                        @if (i > 5)
+                        {
+                            break;
+                        }
+
                     }
 
                     @if (canEdit)
                     {
-                    <li class="results__info-price">
-                        <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
-                        <button class="compare">Remove listing</button>
-                    </li>
+                        <li class="results__info-price">
+                            <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                            <button class="compare">Remove listing</button>
+                        </li>
+                        <li class="results__info-price">
+                            <span style="background-image: url('/i/edit.svg');  background-repeat: no-repeat"> </span>
+                            <button class="compare">Edit</button>
+                        </li>
                     }
                 </ul>
             </div>
+
+
             <!--<form method="get" action="/ajax/registration.php" class="flat__form js-validate" id="js-form-validate">
                 <h2>Request information</h2>
                 <div class="fields">
@@ -69,5 +82,61 @@
                 <button type="submit" class="btn _default _registration">Get apartment</button>
             </form>-->
         </div>
+
+        <div class="flat__map" id="map"></div>
+
+        <div class="flat__description">
+            <h1>Description</h1>
+         
+            <ul class="results__info _two-colu  mn">
+                <li class="results__info-price"> Price: @Model.Cost</li>
+                <li class="results__info-price"> Area: @Model.Area</li>
+                @foreach (var feature in Model.Features)
+                {
+                    <li class="results__info-price">@feature.FeatureType.Name: @feature.Value</li>
+                    
+                }
+
+                @if (canEdit)
+                {
+                    <li class="results__info-price">
+                        <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                        <button class="compare">Remove listing</button>
+                    </li>
+                    <li class="results__info-price">
+                        <span style="background-image: url('/i/edit.svg');  background-repeat: no-repeat"> </span>
+                        <button class="compare">Edit</button>
+                    </li>
+                }
+            </ul>
+        </div>
     </div>
 </div>
+
+<script src="https://api-maps.yandex.ru/2.1/?apikey=d3d9df4a-5306-439b-abe2-f060fef120f1&lang=en_US" type="text/javascript"></script>
+<script type="text/javascript">
+    ymaps.ready(init);
+    var ymapsInstance;
+    function init() {
+        var centerX = 45.47;
+        var centerY = -97.46;
+        var R = 5;
+        var r = R * Math.sqrt(Math.random());
+        var theta = Math.random() * 2 * Math.PI;
+        var x = centerX + r * Math.cos(theta);
+        var y = centerY + r * Math.sin(theta);
+        console.log(x);
+        ymapsInstance = new ymaps.Map("map", {
+            center: [x, y],
+            zoom: 7,
+        }, { suppressMapOpenBlock: true });
+
+
+        ymapsInstance.geoObjects.add(new ymaps.Placemark([x, y], {
+        }, {
+                iconLayout: 'default#image',
+                iconImageSize: [40, 62],
+                iconImageOffset: [-40, -62],
+            }));
+    }
+</script>
