@@ -5,16 +5,23 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 
 namespace FishResident.Services
 {
     public class UpdateRequestsService
     {
         private readonly ApplicationDbContext _context;
+        private readonly IMailSenderService _mailSenderService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public UpdateRequestsService(ApplicationDbContext context)
+
+
+        public UpdateRequestsService(ApplicationDbContext context, IMailSenderService mailSenderService, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _mailSenderService = mailSenderService;
+            _userManager = userManager;
         }
 
         public async Task UpdateRequest(Guid? ResidenceId, Guid? RequestId)
@@ -43,6 +50,7 @@ namespace FishResident.Services
                 requests = await _context.SearchRequests
                     .Include(r => r.FeatureRequests)
                     .ThenInclude(r => r.FeatureType)
+                    .Include(u => u.User)
                     .ToListAsync();
             }
             else
@@ -88,8 +96,9 @@ namespace FishResident.Services
                             SearchRequestId = request.Id,
                             ResidenceId = residence.Id
                         };
-
                         _context.RequestResults.Add(requestResult);
+                        var user = request.User.Email;
+                        _mailSenderService.SendFoundNewResidence(user, request.Id.ToString());
                     }
                 }
             }
