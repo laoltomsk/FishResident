@@ -21,12 +21,14 @@ namespace FishResident.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPermissionService _userPermissions;
+        private readonly UpdateRequestsService _updateRequestsService;
 
-        public RequestsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IPermissionService userPermissions)
+        public RequestsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IPermissionService userPermissions, UpdateRequestsService updateRequestsService)
         {
             _context = context;
             _userManager = userManager;
             _userPermissions = userPermissions;
+            _updateRequestsService = updateRequestsService;
         }
 
         // GET: Requests
@@ -249,48 +251,10 @@ namespace FishResident.Controllers
                     feature.Value = kvp.Value;
                 }
 
-                request.Results.Clear();
-
-                var residences = await _context.Residences
-                    .Where(r => r.Cost < 1.25 * model.Cost && r.Area > 0.75 * model.Area)
-                    .Include(r => r.Features)
-                    .ThenInclude(f => f.FeatureType)
-                    .ToListAsync();
-
-                foreach (var residence in residences)
-                {
-                    double criterias = 0, goodCriterias = 0;
-
-                    goodCriterias += Math.Min(model.Area / residence.Area, residence.Area / model.Area);
-                    criterias++;
-
-                    goodCriterias += Math.Min(model.Cost / residence.Cost, residence.Cost / model.Cost);
-                    criterias++;
-
-                    foreach (var criteria in model.Features)
-                    {
-                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
-                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
-                        {
-                            goodCriterias++;
-                        }
-                        criterias++;
-                    }
-
-                    if (goodCriterias / criterias > 0.75)
-                    {
-                        var requestResult = new RequestResult
-                        {
-                            Relevance = goodCriterias / criterias,
-                            SearchRequestId = request.Id,
-                            ResidenceId = residence.Id
-                        };
-
-                        _context.RequestResults.Add(requestResult);
-                    }
-                }
-
                 await _context.SaveChangesAsync();
+
+                await _updateRequestsService.UpdateRequest(null, request.Id);
+
                 return RedirectToAction(nameof(Index));
             }
 

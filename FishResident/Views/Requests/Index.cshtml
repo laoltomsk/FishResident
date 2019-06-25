@@ -26,7 +26,7 @@
                 <div class="results__items">
                     @foreach (var request in Model)
                     {
-                        <a class="results__item" href="/Requests/Edit?id=@request.Id" style="height: 100px">
+                        <a class="results__item" href="/Requests/Edit/@request.Id" style="height: 100px">
                             <div class="results__description">
                                 <span class="results__description-name">@request.Area sq. m, $@request.Cost</span>
                             </div>
@@ -34,7 +34,7 @@
                                 <li class="results__info-price"> @request.Results.Count() result(s)</li>
                                 <li class="results__info-price">
                                     <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
-                                    <button class="compare" onclick="window.location.assign('/Requests/Delete?id=@request.Id'); event.preventDefault()">Remove listing</button>
+                                    <button class="compare" onclick="window.location.assign('/Requests/Delete/@request.Id'); event.preventDefault()">Remove listing</button>
                                 </li>
                             </ul>
                         </a>

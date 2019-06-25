@@ -20,12 +20,14 @@ namespace FishResident.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IPermissionService _userPermissions;
+        private readonly UpdateRequestsService _updateRequestsService;
 
-        public ResidencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IPermissionService userPermissions)
+        public ResidencesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IPermissionService userPermissions, UpdateRequestsService updateRequestsService)
         {
             _context = context;
             _userManager = userManager;
             _userPermissions = userPermissions;
+            _updateRequestsService = updateRequestsService;
         }
 
         // GET: Residences
@@ -107,6 +109,9 @@ namespace FishResident.Controllers
                     _context.Features.Add(feature);
                 }
                 await _context.SaveChangesAsync();
+
+                await _updateRequestsService.UpdateRequest(residence.Id, null);
+
                 return RedirectToAction(nameof(Index));
             }
 
@@ -186,6 +191,9 @@ namespace FishResident.Controllers
                 }
 
                 await _context.SaveChangesAsync();
+
+                await _updateRequestsService.UpdateRequest(residence.Id, null);
+
                 return RedirectToAction(nameof(Index));
             }
 
