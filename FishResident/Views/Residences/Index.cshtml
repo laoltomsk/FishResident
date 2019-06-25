@@ -23,11 +23,12 @@
                         <p>Agreements for you</p>
                         @foreach (var agreement in ViewBag.Agreements)
                         {
-                        <span>
-                            @agreement.Owner.Email wants to rent
-                            <a href="/Residences/Details?id=@agreement.ResidenceId">
-                                @agreement.Residence.Area sq. m, $@agreement.Residence.Cost @agreement.Residence.Type.Name
-                            </a>
+                            <span>
+                                @agreement.Owner.Email wants to rent
+                                <a href="/Residences/Details?id=@agreement.ResidenceId">
+                                    @agreement.Residence.Area sq. m, $@agreement.Residence.Cost @agreement.Residence.Type.Name
+                                </a>
+                            </span>
                             <br />
                             @if (agreement.isDone)
                             {
@@ -35,15 +36,15 @@
                             } else {
                             <form asp-action="Edit" asp-controller="Agreements">
                                 <input type="hidden" name="id" value="@agreement.Id" />
-                                <button>Accept</button>
+                                <span style="background-image: url('/i/circle.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Accept</button>
                             </form>
                             <form asp-action="Delete" asp-controller="Agreements">
                                 <input type="hidden" name="id" value="@agreement.Id" />
-                                <button>Decline</button>
+                                <span style="background-image: url('/i/delete.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Decline</button>
                             </form>
                             }
-                        </span>
-
                         }
                     </div>
                 </div>

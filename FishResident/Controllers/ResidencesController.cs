@@ -251,6 +251,9 @@ namespace FishResident.Controllers
             _context.Features.RemoveRange(_context.Features.Where(r => r.ResidenceId == id));
             await _context.SaveChangesAsync();
 
+            _context.Agreements.RemoveRange(_context.Agreements.Where(r => r.ResidenceId == id));
+            await _context.SaveChangesAsync();
+
             _context.Residences.Remove(residence);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
