@@ -34,7 +34,7 @@ namespace FishResident.Controllers
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-            mailSenderService.MailSend("kentok2012@gmail.com","TEEEEEST", "Try sending message to mail", null);
+            //mailSenderService.MailSend("kentok2012@gmail.com","TEEEEEST", "Try sending message to mail", null);
             return View();
         }
 
