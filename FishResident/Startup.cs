@@ -48,6 +48,7 @@ namespace FishResident
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<FeatureService>();
             services.AddScoped<UpdateRequestsService>();
+            services.AddScoped<AgreementService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

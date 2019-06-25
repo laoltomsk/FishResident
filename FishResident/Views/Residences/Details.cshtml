@@ -1,15 +1,30 @@
 ﻿@using FishResident.Services
 @model FishResident.Models.Residence
 @inject IPermissionService UserPermissions
-
+@inject AgreementService WhatCanDo
 @{
     ViewData["Title"] = "Details";
     var canEdit = UserPermissions.IsOwnerOfResidence(Model);
+    var whatCanDo = WhatCanDo.WhatCanIDoWithResidence(Model);
 }
 
 <div class="container-fluid _flat">
     <div class="container _flat">
-        <h1 class="flat__name">@Model.Address</h1>
+        <h1 class="flat__name">
+            @Model.Address
+            @if (whatCanDo == "1")
+            {
+                <form asp-action="Create" asp-controller="Agreements" asp-route-residenceId="@Model.Id" style="display: inline; position: relative; top: -5px; left: 30px;">
+                    <button class="btn _default _registration">Want it!</button>
+                </form>
+            }
+            else if (whatCanDo != "0")
+            {
+                <form asp-action="Delete" asp-controller="Agreements" asp-route-id="@whatCanDo" style="display: inline; position: relative; top: -5px; left: 30px;">
+                    <button class="btn _default _registration">Stop want it!</button>
+                </form>
+            }
+        </h1>
         <div class="flat__info">
             <div class="flat__photos">
                 @foreach (ResidencePhoto photo in Model.ResidencePhotos)
