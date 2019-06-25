@@ -19,13 +19,25 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="">
 
+    @if (Context.Request.Path.ToString().Contains("Identity"))
+    {
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    }
     <!--<link rel="shortcut icon" href="/favicon.png">-->
     <!--<link rel="preload" href="/fonts/.woff2" as="font" crossorigin type="font/woff2">-->
     <link rel="stylesheet" href="/css/vendor.css">
-    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/app.css" />
 </head>
-<body>
-
+<body style="padding: 0">
     <header class="header" id="js-header">
         <div class="header__inner">
             <a href='/' class="header__logo"><img src="/i/logo.jpg" /></a>
@@ -45,7 +57,11 @@
         </div>
     </header>
 
-    <main id="js-main">
+    <main id="js-main"
+          @if (Context.Request.Path.ToString().Contains("Identity"))
+          {
+              <text>style="color: black; width: 70%; margin: 0 auto; padding-top: 50px;"</text>
+          }>
         @RenderBody()
     </main>
     <footer class="footer" id="js-footer">
