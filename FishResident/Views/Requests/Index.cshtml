@@ -6,56 +6,41 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Area)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            var canEdit = UserPermissions.IsOwnerOfRequest(item);
-
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Area)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.User.Email)
-                </td>
-                <td>
-                    @if (canEdit)
+<div class="container-fluid _search-results">
+    <div class="container _search-results">
+        <div class="results" style="width: 100%">
+            <div class="results__wrap">
+                <h1>
+                    My requests
+                    <a asp-action="Create" style="display: inline; position: relative; top: -5px; left: 30px;">
+                        <button class="btn _default _registration">Make new request</button>
+                    </a>
+                </h1>
+            </div>
+            <div class="results__filters">
+                <div class="filters">
+                    <div class="filters__type-flat">
+                        <p>I think, agreement requests will be here.</p>
+                    </div>
+                </div>
+                <div class="results__items">
+                    @foreach (var request in Model)
                     {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> <text>|</text>
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a><text>|</text>
+                        <a class="results__item" href="/Requests/Edit?id=@request.Id" style="height: 100px">
+                            <div class="results__description">
+                                <span class="results__description-name">@request.Area sq. m, $@request.Cost</span>
+                            </div>
+                            <ul class="results__info">
+                                <li class="results__info-price"> @request.Results.Count() result(s)</li>
+                                <li class="results__info-price">
+                                    <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                    <button class="compare" onclick="window.location.assign('/Requests/Delete?id=@request.Id'); event.preventDefault()">Remove listing</button>
+                                </li>
+                            </ul>
+                        </a>
                     }
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

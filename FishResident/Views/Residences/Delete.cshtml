@@ -1,51 +1,75 @@
-﻿@model FishResident.Models.Residence
+﻿@using FishResident.Services
+@model FishResident.Models.Residence
+@inject IPermissionService UserPermissions
 
 @{
     ViewData["Title"] = "Delete";
+    var canEdit = UserPermissions.IsOwnerOfResidence(Model);
 }
 
-<h2>Delete</h2>
+<div class="container-fluid _flat">
+    <div class="container _flat">
+        <h1 class="flat__name">
+            Are you sure that you want to delete this residence?
+            <form asp-action="Delete" style="display: inline; position: relative; top: -5px; left: 30px;">
+                <input type="hidden" asp-for="Id" />
+                <button class="btn _default _registration">Delete</button>
+            </form>
+        </h1>
+        <div class="flat__info">
+            <div class="flat__photos">
+                @foreach (ResidencePhoto photo in Model.ResidencePhotos)
+                {
+                    <div class="flat__photo">
+                        <img alt="" src="@photo.Path" />
+                    </div>
+                }
+            </div>
+            <div class="flat__description">
+                <h2>Specifications</h2>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Residence</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Area)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Area)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Cost)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Cost)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Owner)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Owner.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Type)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Type.Id)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+                <ul class="results__info">
+                    <li class="results__info-price"> Address: @Model.Address</li>
+                    <li class="results__info-price"> Price: @Model.Cost</li>
+                    <li class="results__info-price"> Area: @Model.Area</li>
+                    @foreach (var feature in Model.Features)
+                    {
+                        <li class="results__info-price">@feature.FeatureType.Name: @feature.Value</li>
+                    }
+
+                    @if (canEdit)
+                    {
+                        <li class="results__info-price">
+                            <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                            <button class="compare">Remove listing</button>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!--<form method="get" action="/ajax/registration.php" class="flat__form js-validate" id="js-form-validate">
+                <h2>Request information</h2>
+                <div class="fields">
+                    <div class="field js-field">
+                        <label for="">Full Name</label>
+                        <input name="name" type="text" required>
+                    </div>
+                    <div class="field js-field">
+                        <label for="">E-mail</label>
+                        <input name="email" type="email" required>
+                    </div>
+
+                    <div class="field js-field">
+                        <label for="">Phone number</label>
+                        <input name="tel" type="text" required>
+                    </div>
+
+                    <div class="field js-field">
+                        <label for="">More info</label>
+                        <textarea name="info" required> </textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn _default _registration">Get apartment</button>
+            </form>-->
+        </div>
+    </div>
 </div>

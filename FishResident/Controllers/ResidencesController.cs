@@ -43,6 +43,7 @@ namespace FishResident.Controllers
         }
 
         // GET: Residences/Details/5
+        [AllowAnonymous]
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
@@ -145,6 +146,8 @@ namespace FishResident.Controllers
                 Features = new Dictionary<Guid, string>()
             };
 
+            ViewBag.Id = residence.Id;
+
             foreach (var feature in residence.Features)
             {
                 model.Features[feature.FeatureType.Id] = feature.Value;
@@ -212,7 +215,11 @@ namespace FishResident.Controllers
             var residence = await _context.Residences
                 .Include(r => r.Owner)
                 .Include(r => r.Type)
+                .Include(r => r.ResidencePhotos)
+                .Include(r => r.Features)
+                .ThenInclude(f => f.FeatureType)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (residence == null || !_userPermissions.IsOwnerOfResidence(residence))
             {
                 return NotFound();
@@ -232,6 +239,12 @@ namespace FishResident.Controllers
             {
                 return NotFound();
             }
+
+            _context.RequestResults.RemoveRange(_context.RequestResults.Where(r => r.ResidenceId == id));
+            await _context.SaveChangesAsync();
+
+            _context.Features.RemoveRange(_context.Features.Where(r => r.ResidenceId == id));
+            await _context.SaveChangesAsync();
 
             _context.Residences.Remove(residence);
             await _context.SaveChangesAsync();

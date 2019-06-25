@@ -32,13 +32,10 @@
             <div class="header__controls">
                 <ul class="menu">
                     <li class="menu__item"><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li class="menu__item"><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li class="menu__item"><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="menu__item"><a asp-area="" asp-controller="Residences" asp-action="Index">My residences</a></li>
                         <li class="menu__item"><a asp-area="" asp-controller="Requests" asp-action="Index">My requests</a></li>
-                        <li class="menu__item"><a asp-area="" asp-controller="ResidenceTypes" asp-action="Index">Residence types</a></li>
                     }
                     <!-- класс _select -->
 

@@ -35,76 +35,76 @@ namespace FishResident.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var residences = await _context.SearchRequests
                 .Include(r => r.User)
+                .Include(r => r.Results)
                 .Where(r => r.UserId == user.Id)
                 .ToListAsync();
 
             return View(residences);
         }
 
-        // GET: Requests/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var request = await _context.SearchRequests
-                .Include(r => r.User)
-                .Include(r => r.FeatureRequests)
-                .ThenInclude(f => f.FeatureType)
-                .Include(r => r.Results)
-                .ThenInclude(r => r.Residence)
-                .ThenInclude(r => r.Type)
-                .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (request == null)
-            {
-                return NotFound();
-            }
-
-            request.Results = request.Results.OrderByDescending(r => r.Relevance).ToList();
-
-            return View(request);
-        }
-
         // GET: Residences/Create
+        [AllowAnonymous]
         public IActionResult Create()
         {
-            return View(new RequestEditModel());
+            var model = new RequestEditModel();
+            model.Results = new List<RequestResult>();
+
+            var residences = _context.Residences
+                .Include(r => r.Features)
+                .Include(r => r.ResidencePhotos)
+                .Include(r => r.Type)
+                .Take(5);
+
+            foreach (var residence in residences)
+            {
+                model.Results.Add(new RequestResult
+                {
+                    Relevance = (new Random()).NextDouble(),
+                    ResidenceId = residence.Id,
+                    Residence = residence
+                });
+            }
+
+            return View(model);
         }
 
         // POST: Residences/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(RequestEditModel model)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
-            if (ModelState.IsValid && user != null)
+            model.Results = new List<RequestResult>();
+
+            if (ModelState.IsValid)
             {
                 var request = new SearchRequest
                 {
                     Address = model.Address,
                     Area = model.Area,
-                    Cost = model.Cost,
-                    UserId = user.Id
+                    Cost = model.Cost
                 };
 
-                _context.SearchRequests.Add(request);
-
-                foreach (KeyValuePair<Guid, String> kvp in model.Features)
+                if (user != null)
                 {
-                    var feature = new FeatureRequest
-                    {
-                        SearchRequestId = request.Id,
-                        FeatureTypeId = kvp.Key,
-                        Value = kvp.Value
-                    };
+                    request.UserId = user.Id;
+                    _context.SearchRequests.Add(request);
 
-                    _context.FeatureRequests.Add(feature);
+                    foreach (KeyValuePair<Guid, String> kvp in model.Features)
+                    {
+                        var feature = new FeatureRequest
+                        {
+                            SearchRequestId = request.Id,
+                            FeatureTypeId = kvp.Key,
+                            Value = kvp.Value
+                        };
+
+                        _context.FeatureRequests.Add(feature);
+                    }
                 }
 
                 var residences = await _context.Residences
@@ -147,101 +147,32 @@ namespace FishResident.Controllers
                             ResidenceId = residence.Id
                         };
 
-                        _context.RequestResults.Add(requestResult);
-                    }
-                }
-
-                await _context.SaveChangesAsync();
-
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(model);
-        }
-
-        // GET: Residences/Create
-        [AllowAnonymous]
-        public IActionResult CreateAnonymous()
-        {
-            var model = new RequestEditModel();
-            model.Results = new List<RequestResult>();
-
-            return View(model);
-        }
-
-        // POST: Residences/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAnonymous(RequestEditModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                var request = new SearchRequest
-                {
-                    Address = model.Address,
-                    Area = model.Area,
-                    Cost = model.Cost
-                };
-
-                _context.SearchRequests.Add(request);
-
-                foreach (KeyValuePair<Guid, String> kvp in model.Features)
-                {
-                    var feature = new FeatureRequest
-                    {
-                        SearchRequestId = request.Id,
-                        FeatureTypeId = kvp.Key,
-                        Value = kvp.Value
-                    };
-
-                    _context.FeatureRequests.Add(feature);
-                }
-
-                var residences = await _context.Residences
-                    .Where(r => r.Cost < 1.25 * model.Cost && r.Area > 0.75 * model.Area)
-                    .Include(r => r.Features)
-                    .ThenInclude(f => f.FeatureType)
-                    .ToListAsync();
-
-                foreach (var residence in residences)
-                {
-                    double criterias = 0, goodCriterias = 0;
-
-                    goodCriterias += Math.Min(model.Area / residence.Area, residence.Area / model.Area);
-                    criterias++;
-
-                    goodCriterias += Math.Min(model.Cost / residence.Cost, residence.Cost / model.Cost);
-                    criterias++;
-
-                    foreach (var criteria in model.Features)
-                    {
-                        var residenceValue = residence.Features.Where(f => f.FeatureTypeId == criteria.Key).First().Value;
-                        if (criteria.Value == "Not Specified" || criteria.Value == residenceValue)
+                        if (user != null)
                         {
-                            goodCriterias++;
+                            _context.RequestResults.Add(requestResult);
                         }
-                        criterias++;
-                    }
 
-                    if (goodCriterias / criterias > 0.75)
-                    {
-                        var requestResult = new RequestResult
+                        model.Results.Add(new RequestResult
                         {
                             Relevance = goodCriterias / criterias,
-                            SearchRequestId = request.Id,
-                            ResidenceId = residence.Id
-                        };
-
-                        _context.RequestResults.Add(requestResult);
+                            ResidenceId = residence.Id,
+                            Residence = await _context.Residences
+                                .Where(r => r.Id == residence.Id)
+                                .Include(r => r.Type)
+                                .Include(r => r.Features)
+                                .Include(r => r.ResidencePhotos)
+                                .SingleOrDefaultAsync()
+                        });
                     }
                 }
 
                 await _context.SaveChangesAsync();
 
-                return RedirectToAction(nameof(Index));
+                if (user != null)
+                {
+                    return Redirect("/Requests/Edit/" + request.Id.ToString());
+                }
+
             }
 
             return View(model);
@@ -260,6 +191,11 @@ namespace FishResident.Controllers
                 .Include(r => r.FeatureRequests)
                 .ThenInclude(f => f.FeatureType)
                 .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.Type)
+                .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.ResidencePhotos)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null || !_userPermissions.IsOwnerOfRequest(request))
@@ -272,7 +208,8 @@ namespace FishResident.Controllers
                 Address = request.Address,
                 Area = request.Area,
                 Cost = request.Cost,
-                Features = new Dictionary<Guid, string>()
+                Features = new Dictionary<Guid, string>(),
+                Results = request.Results
             };
 
             foreach (var feature in request.FeatureRequests)
@@ -405,6 +342,11 @@ namespace FishResident.Controllers
                 .Include(r => r.FeatureRequests)
                 .ThenInclude(f => f.FeatureType)
                 .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.Type)
+                .Include(r => r.Results)
+                .ThenInclude(r => r.Residence)
+                .ThenInclude(r => r.ResidencePhotos)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (request == null || !_userPermissions.IsOwnerOfRequest(request))
@@ -426,6 +368,9 @@ namespace FishResident.Controllers
             {
                 return NotFound();
             }
+
+            _context.RequestResults.RemoveRange(_context.RequestResults.Where(r => r.SearchRequestId == id));
+            await _context.SaveChangesAsync();
 
             _context.SearchRequests.Remove(request);
             await _context.SaveChangesAsync();
