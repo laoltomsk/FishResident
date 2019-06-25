@@ -79,6 +79,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Views\Requests\CreateAnonymous.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
     <Content Update="Views\Requests\Create.cshtml">
       <Pack>$(IncludeRazorContentInPack)</Pack>
     </Content>

@@ -1,0 +1,203 @@
+﻿@model FishResident.Models.EditModels.RequestEditModel
+@using FishResident.Services
+@inject FeatureService featureService
+@{
+    ViewData["Title"] = "Create";
+    var featureTypes = featureService.GetFeatureTypes();
+}
+
+<div class="container-fluid _search-results">
+    <div class="container _search-results">
+        <div class="results">
+            <div class="results__wrap">
+                <h1> Now you choose</h1>
+                <span class="results__count">@Model.Results.Count() result(s)</span>
+            </div>
+            <div class="results__filters">
+                <div class="filters">
+                    <div class="filters__type-flat">
+                        <p> Select by parameters</p>
+                        <form asp-action="CreateAnonymous" class="filters__form">
+                            <div class="fields">
+                                <div class="field js-field">
+                                    <label asp-for="Area"></label>
+                                    <input asp-for="Area" />
+                                </div>
+                                <div class="field js-field">
+                                    <label asp-for="Cost"></label>
+                                    <input asp-for="Cost" />
+                                </div>
+                                <div class="field js-field">
+                                    <label asp-for="Address"></label>
+                                    <input asp-for="Address" />
+                                </div>
+                                @foreach (var featureType in featureTypes)
+                                {
+
+                                    <span>@featureType.Name</span>
+                                    <select asp-for="Features[featureType.Id]" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))">
+                                        <option value="Not Specified">Not Specified</option>
+                                    </select>
+
+                                }
+                            </div>
+                            <button type="submit" class="btn _default _filters">Update search</button>
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="results__items">
+                    <a class="results__item" href="flat.html">
+                        <div class="results__title">
+                            <img alt="" src="/i/item-2.jpg" />
+                        </div>
+                        <div class="results__description">
+                            <span class="results__description-name">11301 West Olympic Boulevard</span>
+                            <span class="results__description-text">
+                                Use this tool as test data for an automated system or find your next pen pal by
+                                cold snail-mailing letter to a random address. If its not an actual address, the
+                                post office should return it back to sender.
+                            </span>
+                        </div>
+                        <ul class="results__info">
+                            <li class="results__info-price"> 30000$</li>
+                            <li class="results__info-price"> Third St.</li>
+                            <li class="results__info-price"> 1.25$/mon</li>
+                            <li class="results__info-price"> <button class="details"> Details</button></li>
+
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/diagram.svg'); background-repeat: no-repeat"> </span>
+                                <button class="compare"> Compare</button>
+                            </li>
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Remove listing</button>
+                            </li>
+                        </ul>
+                    </a>
+                    <a class="results__item" href="flat.html">
+                        <div class="results__title">
+                            <img alt="" src="/i/item-2.jpg" />
+                        </div>
+                        <div class="results__description">
+                            <span class="results__description-name">11301 West Olympic Boulevard</span>
+                            <span class="results__description-text">
+                                Use this tool as test data for an automated system or find your next pen pal by
+                                cold snail-mailing letter to a random address. If its not an actual address, the
+                                post office should return it back to sender.
+                            </span>
+                        </div>
+                        <ul class="results__info">
+                            <li class="results__info-price"> 30000$</li>
+                            <li class="results__info-price"> Third St.</li>
+                            <li class="results__info-price"> 1.25$/mon</li>
+                            <li class="results__info-price"> <button class="details"> Details</button></li>
+
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/diagram.svg'); background-repeat: no-repeat"> </span>
+                                <button class="compare"> Compare</button>
+                            </li>
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Remove listing</button>
+                            </li>
+                        </ul>
+                    </a>
+                    <a class="results__item" href="flat.html">
+                        <div class="results__title">
+                            <img alt="" src="/i/item-2.jpg" />
+                        </div>
+                        <div class="results__description">
+                            <span class="results__description-name">11301 West Olympic Boulevard</span>
+                            <span class="results__description-text">
+                                Use this tool as test data for an automated system or find your next pen pal by
+                                cold snail-mailing letter to a random address. If its not an actual address, the
+                                post office should return it back to sender.
+                            </span>
+                        </div>
+                        <ul class="results__info">
+                            <li class="results__info-price"> 30000$</li>
+                            <li class="results__info-price"> Third St.</li>
+                            <li class="results__info-price"> 1.25$/mon</li>
+                            <li class="results__info-price"> <button class="details"> Details</button></li>
+
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/diagram.svg'); background-repeat: no-repeat"> </span>
+                                <button class="compare"> Compare</button>
+                            </li>
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Remove listing</button>
+                            </li>
+                        </ul>
+                    </a>
+                    <a class="results__item" href="flat.html">
+                        <div class="results__title">
+                            <img alt="" src="/i/item-2.jpg" />
+                        </div>
+                        <div class="results__description">
+                            <span class="results__description-name">11301 West Olympic Boulevard</span>
+                            <span class="results__description-text">
+                                Use this tool as test data for an automated system or find your next pen pal by
+                                cold snail-mailing letter to a random address. If its not an actual address, the
+                                post office should return it back to sender.
+                            </span>
+                        </div>
+                        <ul class="results__info">
+                            <li class="results__info-price"> 30000$</li>
+                            <li class="results__info-price"> Third St.</li>
+                            <li class="results__info-price"> 1.25$/mon</li>
+                            <li class="results__info-price"> <button class="details"> Details</button></li>
+
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/diagram.svg'); background-repeat: no-repeat"> </span>
+                                <button class="compare"> Compare</button>
+                            </li>
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Remove listing</button>
+                            </li>
+                        </ul>
+                    </a>
+                    <a class="results__item" href="flat.html">
+                        <div class="results__title">
+                            <img alt="" src="/i/item-2.jpg" />
+                        </div>
+                        <div class="results__description">
+                            <span class="results__description-name">11301 West Olympic Boulevard</span>
+                            <span class="results__description-text">
+                                Use this tool as test data for an automated system or find your next pen pal by
+                                cold snail-mailing letter to a random address. If its not an actual address, the
+                                post office should return it back to sender.
+                            </span>
+                        </div>
+                        <ul class="results__info">
+                            <li class="results__info-price"> 30000$</li>
+                            <li class="results__info-price"> Third St.</li>
+                            <li class="results__info-price"> 1.25$/mon</li>
+                            <li class="results__info-price"> <button class="details"> Details</button></li>
+
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/diagram.svg'); background-repeat: no-repeat"> </span>
+                                <button class="compare"> Compare</button>
+                            </li>
+                            <li class="results__info-price">
+                                <span style="background-image: url('/i/remove.svg');  background-repeat: no-repeat"> </span>
+                                <button class="compare">Remove listing</button>
+                            </li>
+                        </ul>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+
+
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
