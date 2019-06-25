@@ -252,6 +252,16 @@ namespace FishResident.Data
                 new { FeatureTypeId = neighbourhoodType.Id, Value = "Suburban", Id = Guid.NewGuid() }
             };
 
+            var types = new[] {
+                new { Name = "Flat", Id = Guid.NewGuid() },
+                new { Name = "Cottage", Id = Guid.NewGuid() },
+                new { Name = "Bungalow", Id = Guid.NewGuid() },
+                new { Name = "Park home", Id = Guid.NewGuid() },
+                new { Name = "Maisonette", Id = Guid.NewGuid() },
+                new { Name = "House", Id = Guid.NewGuid() },
+                new { Name = "Mansion", Id = Guid.NewGuid() }
+            };
+
             builder.Entity<FeatureType>().HasData(bedroomNum);
             builder.Entity<FeatureType>().HasData(bathroomNum);
             builder.Entity<FeatureType>().HasData(kitchenSize);
@@ -307,6 +317,8 @@ namespace FishResident.Data
             builder.Entity<FeatureAllowedValue>().HasData(parks);
             builder.Entity<FeatureAllowedValue>().HasData(seniors);
             builder.Entity<FeatureAllowedValue>().HasData(neighbourhoodTypes);
+
+            builder.Entity<ResidenceType>().HasData(types);
         }
     }
 }
