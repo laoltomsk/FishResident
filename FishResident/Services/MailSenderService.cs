@@ -52,7 +52,7 @@ namespace FishResident.Services
                 mail.From = new MailAddress(emailFromAddress);
                 mail.To.Add(reciever);
                 mail.Subject = "New residence found!";
-                mail.Body = "Hello! We found new residence for you! To watch new results go to link: https://localhost:44375/Requests/Edit/"+requestId+" \n Thanks for using Triad Residence!";
+                mail.Body = "Hello! We found new residence for you! To watch new results go to link: https://localhost:44375/Requests/Edit/"+requestId+" \nThanks for using Triad Residence!";
                 using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
                 {
                     smtp.Credentials = new NetworkCredential(emailFromAddress, password);
@@ -71,7 +71,7 @@ namespace FishResident.Services
                 mail.From = new MailAddress(emailFromAddress);
                 mail.To.Add(reciever);
                 mail.Subject = "New renter found!";
-                mail.Body = "Hello! Anybody want to rent your residence! To watch results go to link: https://localhost:44375/Residences \n Thanks for using Triad Residence!";
+                mail.Body = "Hello! Anybody want to rent your residence! To watch results go to link: https://localhost:44375/Residences \nThanks for using Triad Residence!";
                 using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
                 {
                     smtp.Credentials = new NetworkCredential(emailFromAddress, password);

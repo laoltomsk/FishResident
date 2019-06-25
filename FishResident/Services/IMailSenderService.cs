@@ -10,5 +10,7 @@ namespace FishResident.Services
         bool MailSend(string reciever, string subject, string message, string attachmentLink);
 
         bool SendFoundNewResidence(string reciever, string requestId);
+
+        bool AnybodyWantYou(string reciever);
     }
 }

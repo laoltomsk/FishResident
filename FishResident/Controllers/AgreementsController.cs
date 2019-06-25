@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using FishResident.Data;
 using FishResident.Models;
+using FishResident.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authorization;
 
@@ -17,11 +18,13 @@ namespace FishResident.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IMailSenderService _mailSenderService;
 
-        public AgreementsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public AgreementsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IMailSenderService mailSenderService)
         {
             _context = context;
             _userManager = userManager;
+            _mailSenderService = mailSenderService;
         }
 
         // POST: Agreements/Create
@@ -57,7 +60,7 @@ namespace FishResident.Controllers
 
             _context.Add(agreement);
             await _context.SaveChangesAsync();
-
+            _mailSenderService.AnybodyWantYou(residence.Owner.Email);
             return RedirectToAction("Details", "Residences", new { id = residence.Id });
         }
 
