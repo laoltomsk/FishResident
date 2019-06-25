@@ -34,16 +34,24 @@
                             {
                                 <text>--already accepted.</text>
                             } else {
-                            <form asp-action="Edit" asp-controller="Agreements">
-                                <input type="hidden" name="id" value="@agreement.Id" />
-                                <span style="background-image: url('/i/circle.svg');  background-repeat: no-repeat"> </span>
-                                <button class="compare">Accept</button>
-                            </form>
-                            <form asp-action="Delete" asp-controller="Agreements">
-                                <input type="hidden" name="id" value="@agreement.Id" />
-                                <span style="background-image: url('/i/delete.svg');  background-repeat: no-repeat"> </span>
-                                <button class="compare">Decline</button>
-                            </form>
+                            <div class="results__info" style="display:flex; flex-direction: row; justify-content:space-between;">
+                                <form asp-action="Edit" asp-controller="Agreements">
+                                    <input type="hidden" name="id" value="@agreement.Id" />
+                                    <div class="results__info-price" style="display:flex; flex-direction: row; justify-content:flex-start;">
+
+                                        <span style="background-image: url('/i/circle.svg'); margin-bottom: 0; background-repeat: no-repeat"> </span>
+                                        <button class="compare" style="width:100%">Accept</button>
+                                    </div>
+                                </form>
+                                <form asp-action="Delete" asp-controller="Agreements">
+                                    <input type="hidden" name="id" value="@agreement.Id" />
+                                    <div class="results__info-price" style="display:flex; flex-direction: row; justify-content:flex-start;">
+                                        <span style="background-image: url('/i/remove.svg'); margin-bottom: 0;  background-repeat: no-repeat"> </span>
+                                        <button class="compare" style="width:100%">Decline</button>
+                                    </div>
+                                </form>
+                            </div>
+                          
                             }
                         }
                     </div>

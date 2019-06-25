@@ -285,7 +285,7 @@ $(function () {
 
     var uploadButton = $('.browse-btn');
     var fileInfo = $('.file-info');
-    var realInput = $('real-input');
+    var realInput = $('#real-input');
 
     uploadButton.on('click', function () {
         realInput.click();

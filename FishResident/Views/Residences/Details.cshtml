@@ -28,10 +28,20 @@
         </h1>
         <div class="flat__info">
             <div class="flat__photos">
+                @if(@Model.ResidencePhotos.Count==0) {
+                <div class="flat__photo">
+ 
+                    <img alt="" src="/i/item-1.jpg" />
+                         
+                </div>
+                }
                 @foreach (ResidencePhoto photo in Model.ResidencePhotos)
                 {
                     <div class="flat__photo">
+                     
                         <img alt="" src="@photo.Path" />
+                       
+
                         @if (canEdit)
                         {
                             <br />

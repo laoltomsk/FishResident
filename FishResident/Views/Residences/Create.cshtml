@@ -14,9 +14,9 @@
                 <h1>Now you create</h1>
             </div>
             <div class="results__filters">
-                <div class="filters">
-                    <div class="filters__type-flat">
-                        <form asp-action="Create">
+                <div class="filters" style="width:100%;">
+                    <div class="filters__type-flat" style="">
+                        <form asp-action="Create" style="display:flex; flex-direction: column">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="field js-field">
                                 <label asp-for="Area">Area</label>
@@ -41,7 +41,7 @@
                                         <select asp-for="Features[featureType.Id]" class="field js-field" asp-items="@(new SelectList(featureType.AllowedValues, "Value", "Value"))"></select>
                                   
                                 }
-                                <button type="submit" class="btn _default _filters">Save changes</button>
+                                <button type="submit" class="btn _default _filters" style="align-self:center;">Save changes</button>
                         </form>
                     </div>
                 </div>
