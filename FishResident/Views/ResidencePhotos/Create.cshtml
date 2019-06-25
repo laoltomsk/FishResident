@@ -16,8 +16,12 @@
                         <form asp-action="Create" asp-route-residenceId="@ViewBag.Residence.Id" enctype="multipart/form-data">
                             <div asp-validation-summary="ModelOnly"></div>
                             <span>File</span>
-                            <div class="field js-field">
-                                <input type="file" asp-for="File" />
+                            <div class="input-container">
+                                <input type="file" asp-for="File" id="real-input">
+                                <button type="button" class="browse-btn">
+                                    Browse Files
+                                </button>
+                                <span class="file-info">Upload a file</span>
                             </div>
                             <button type="submit" class="btn _default _filters">Add photo</button>
                         </form>

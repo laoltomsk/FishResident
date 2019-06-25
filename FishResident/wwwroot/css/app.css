@@ -1068,6 +1068,9 @@ label {
   transition: transform 0.3s ease, -webkit-transform 0.3s ease;
   pointer-events: none;
 }
+.field input[type=file] {
+  display: none;
+}
 .field input,
 .field textarea {
   position: absolute;
@@ -1197,6 +1200,11 @@ label {
       -ms-flex-align: end;
           align-items: flex-end;
   margin-left: 2rem;
+}
+.results__info._two-column {
+  -webkit-column-count: 2;
+     -moz-column-count: 2;
+          column-count: 2;
 }
 .results__info li {
   display: -webkit-box;
@@ -1518,12 +1526,48 @@ label {
 .filters {
   width: 30%;
 }
-.filters select {
-  width: 100%;
-  height: 45px;
+.filters .input-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  max-width: 100%;
+  background-color: #EDEDED;
+  border: 1px solid #DFDFDF;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
 }
-.filters select:not(:last-child) {
-  margin-bottom: 2rem;
+.filters input[type=file] {
+  display: none;
+}
+.filters .file-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 10px;
+  font-size: 16px;
+  margin-bottom: 0;
+}
+.filters .browse-btn {
+  background: #d3cdc0;
+  color: #fff;
+  min-height: 35px;
+  padding: 10px;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -webkit-transition: background-color 0.25s ease;
+  -o-transition: background-color 0.25s ease;
+  transition: background-color 0.25s ease;
+}
+.filters .browse-btn:hover {
+  background: #574f3d;
 }
 .filters .fields:last-of-type {
   margin-bottom: 1.5rem;
@@ -2415,7 +2459,6 @@ label {
           flex-direction: row;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  max-width: 500px;
   margin-right: 2rem;
 }
 .flat__map {
@@ -2551,4 +2594,160 @@ label {
 }
 .flat__description {
   color: #4A4A4A;
+}
+
+.sel {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  height: 45px;
+  font-size: 16px;
+  background-color: transparent;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+}
+
+.sel::before {
+  position: absolute;
+  top: calc(50% - 0.5em);
+  right: 20px;
+  border: 6px solid transparent;
+  border-color: #838e95 transparent transparent transparent;
+  content: "";
+}
+
+.sel.active::before {
+  -webkit-transform: rotateX(-180deg);
+          transform: rotateX(-180deg);
+}
+
+.sel__placeholder {
+  display: block;
+  font-size: 16px;
+  padding: 0.2em 0.5em;
+  visibility: visible;
+  color: #838e95;
+  text-align: left;
+  pointer-events: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.sel.active .sel__placeholder {
+  visibility: hidden;
+}
+
+.sel__placeholder::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.2em 0.5em;
+  content: attr(data-placeholder);
+  visibility: hidden;
+}
+
+.sel.active .sel__placeholder::before {
+  visibility: visible;
+}
+
+.sel__box {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: -4px;
+  display: none;
+  list-style-type: none;
+  text-align: left;
+  font-size: 1em;
+  background-color: #ebedef;
+  width: calc(100% + 8px);
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.sel.active .sel__box {
+  display: block;
+  -webkit-animation: fadeInUp 500ms;
+          animation: fadeInUp 500ms;
+  z-index: 1000;
+}
+
+.sel__box__options {
+  display: list-item;
+  padding: 0.5em;
+  color: #838e95;
+  font-size: 14px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.sel__box__options::after {
+  display: none;
+  content: "";
+  font-size: 0.5em;
+  margin-left: 5px;
+}
+
+@-webkit-keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 20px, 0);
+            transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    -webkit-transform: translate3d(0, 20px, 0);
+            transform: translate3d(0, 20px, 0);
+  }
+  to {
+    opacity: 1;
+    -webkit-transform: none;
+            transform: none;
+  }
+}
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.sel__box__options.selected::after {
+  display: inline;
+}
+
+.sel__box__options:hover {
+  color: white;
+  text-decoration: underline;
+}
+
+/* ----- Select Box Black Panther ----- */
+.sel {
+  border-bottom: 4px solid rgba(0, 0, 0, 0.3);
+}
+
+.sel--black-panther {
+  z-index: 3;
 }
