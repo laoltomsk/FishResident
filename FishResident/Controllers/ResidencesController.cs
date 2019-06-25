@@ -41,6 +41,14 @@ namespace FishResident.Controllers
                 .Where(r => r.OwnerId == user.Id)
                 .ToListAsync();
 
+            var agreements = await _context.Agreements
+                .Include(r => r.Resident)
+                .Include(r => r.Residence)
+                .Where(r => r.OwnerId == user.Id)
+                .ToListAsync();
+
+            ViewBag.Agreements = agreements;
+
             return View(residences);
         }
 

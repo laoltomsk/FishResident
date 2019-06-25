@@ -28,5 +28,7 @@ namespace FishResident.Models
         public String OwnerId { get; set; }
 
         public ApplicationUser Owner { get; set; }
+
+        public Boolean isDone { get; set; }
     }
 }

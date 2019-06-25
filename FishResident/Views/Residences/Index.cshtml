@@ -20,7 +20,31 @@
             <div class="results__filters">
                 <div class="filters">
                     <div class="filters__type-flat">
-                        <p>What should we put here?</p>
+                        <p>Agreements for you</p>
+                        @foreach (var agreement in ViewBag.Agreements)
+                        {
+                        <span>
+                            @agreement.Owner.Email wants to rent
+                            <a href="/Residences/Details?id=@agreement.ResidenceId">
+                                @agreement.Residence.Area sq. m, $@agreement.Residence.Cost @agreement.Residence.Type.Name
+                            </a>
+                            <br />
+                            @if (agreement.isDone)
+                            {
+                                <text>--already accepted.</text>
+                            } else {
+                            <form asp-action="Edit" asp-controller="Agreements">
+                                <input type="hidden" name="id" value="@agreement.Id" />
+                                <button>Accept</button>
+                            </form>
+                            <form asp-action="Delete" asp-controller="Agreements">
+                                <input type="hidden" name="id" value="@agreement.Id" />
+                                <button>Decline</button>
+                            </form>
+                            }
+                        </span>
+
+                        }
                     </div>
                 </div>
                 <div class="results__items">
