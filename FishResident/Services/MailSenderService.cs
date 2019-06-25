@@ -63,5 +63,24 @@ namespace FishResident.Services
 
             return true;
         }
+
+        public bool AnybodyWantYou(string reciever)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(emailFromAddress);
+                mail.To.Add(reciever);
+                mail.Subject = "New renter found!";
+                mail.Body = "Hello! Anybody want to rent your residence! To watch results go to link: https://localhost:44375/Residences \n Thanks for using Triad Residence!";
+                using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+                {
+                    smtp.Credentials = new NetworkCredential(emailFromAddress, password);
+                    smtp.EnableSsl = enableSSL;
+                    smtp.Send(mail);
+                }
+            }
+
+            return true;
+        }
     }
 }
